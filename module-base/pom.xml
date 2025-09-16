@@ -2,8 +2,8 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.goobi.workflow.plugin</groupId>
-    <artifactId>plugin-step-mei-editor</artifactId>
-    <version>25.03-SNAPSHOT</version>
+    <artifactId>plugin-step-kick-start</artifactId>
+    <version>25.09-SNAPSHOT</version>
   </parent>
   <artifactId>plugin-step-mei-editor-base</artifactId>
   <packaging>jar</packaging>

@@ -10,7 +10,9 @@
     xmlns:jsf="http://xmlns.jcp.org/jsf"
     xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:button="http://goobi.io/button"
-    xmlns:section="http://goobi.io/section">
+    xmlns:section="http://goobi.io/section"
+	xmlns:mei="http://goobi.io/mei"
+    >
     <ui:param name="myPageTitle" value="#{msgs.plugin}: #{msgs[('plugin_').concat(AktuelleSchritteForm.myPlugin.title)]}" />
 
 	<ui:define name="breadcrumb">
@@ -79,7 +81,16 @@
                     </div>
                 </section:header>
                 <section:body padding="true">
-                    <h:outputText value="hello step plugin: #{AktuelleSchritteForm.myPlugin.value}"/>
+                    <div class="row">
+                        <div class="col">
+                            <!-- Thumbnails here -->
+                        </div>
+                        <div class="col">
+                            <!-- MEI Editor here -->
+                            <!-- needs: a method that returns the MEI-XML -->
+                            <!-- <mei:editor src="#{}"></mei:editor> -->
+                        </div>
+                    </div>
                 </section:body>
                 <section:footer>
                     <button:row>
