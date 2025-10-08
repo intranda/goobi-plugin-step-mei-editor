@@ -15,7 +15,7 @@ Detail | Description
 --- | ---
 **Plugin identifier**       | intranda_step_mei_editor
 **Plugin type**             | Step plugin
-**Licence**                 | GPL 2.0 or newer    
+**Licence**                 | GPL 2.0 or newer
 **Documentation (German)**  | - no documentation available -
 **Documentation (English)** | - no documentation available -
 
@@ -31,7 +31,7 @@ Detail | Description
 
 ## Development
 
-This plugin was developed by intranda. If you have any issues, feedback, question or if you are looking for more information about Goobi workflow, Goobi viewer and all our other developments that are used in digitisation projects please get in touch with us.  
+This plugin was developed by intranda. If you have any issues, feedback, question or if you are looking for more information about Goobi workflow, Goobi viewer and all our other developments that are used in digitisation projects please get in touch with us.
 
 Contact | Details
 --- | ---

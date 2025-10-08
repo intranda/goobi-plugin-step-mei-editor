@@ -1,0 +1,23 @@
+{
+  "name": "goobi-plugin-step-mei-editor-gui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Simon Sendler",
+  "license": "GPL-2.0-or-later",
+  "description": "",
+  "dependencies": {
+    "@codemirror/lang-xml": "^6.1.0",
+    "@codemirror/language": "^6.11.3",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.38.2",
+    "@tonejs/midi": "^2.0.28",
+    "codemirror": "^6.0.2",
+    "gulp": "^5.0.1",
+    "rollup": "^4.50.2",
+    "tone": "^15.1.22",
+    "verovio": "^5.6.0"
+  }
+}

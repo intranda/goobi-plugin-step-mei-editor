@@ -1,0 +1,152 @@
+<!-- MEI Editor with CodeMirror and Verovio side by side -->
+<ui:composition
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:mei="http://goobi.io/mei"
+	>
+
+    <!-- Default MEI content -->
+    <c:set var="defaultMei">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;mei xmlns=&quot;http://www.music-encoding.org/ns/mei&quot; meiversion=&quot;5.0&quot;&gt;
+    &lt;meiHead&gt;
+        &lt;fileDesc&gt;
+            &lt;titleStmt&gt;
+                &lt;title&gt;Sample MEI Document&lt;/title&gt;
+            &lt;/titleStmt&gt;
+            &lt;pubStmt&gt;&lt;/pubStmt&gt;
+        &lt;/fileDesc&gt;
+    &lt;/meiHead&gt;
+    &lt;music&gt;
+        &lt;body&gt;
+            &lt;mdiv&gt;
+                &lt;score&gt;
+                    &lt;scoreDef meter.count=&quot;4&quot; meter.unit=&quot;4&quot; key.sig=&quot;0&quot;&gt;
+                        &lt;staffGrp&gt;
+                            &lt;staffDef n=&quot;1&quot; lines=&quot;5&quot; clef.shape=&quot;G&quot; clef.line=&quot;2&quot;&gt;
+                                &lt;label&gt;Piano&lt;/label&gt;
+                            &lt;/staffDef&gt;
+                        &lt;/staffGrp&gt;
+                    &lt;/scoreDef&gt;
+                    &lt;section&gt;
+                        &lt;measure n=&quot;1&quot;&gt;
+                            &lt;staff n=&quot;1&quot;&gt;
+                                &lt;layer n=&quot;1&quot;&gt;
+                                    &lt;note xml:id=&quot;note-1&quot; pname=&quot;c&quot; oct=&quot;4&quot; dur=&quot;4&quot;/&gt;
+                                    &lt;note xml:id=&quot;note-2&quot; pname=&quot;d&quot; oct=&quot;4&quot; dur=&quot;4&quot;/&gt;
+                                    &lt;note xml:id=&quot;note-3&quot; pname=&quot;e&quot; oct=&quot;4&quot; dur=&quot;4&quot;/&gt;
+                                    &lt;note xml:id=&quot;note-4&quot; pname=&quot;f&quot; oct=&quot;4&quot; dur=&quot;4&quot;/&gt;
+                                &lt;/layer&gt;
+                            &lt;/staff&gt;
+                        &lt;/measure&gt;
+                        &lt;measure n=&quot;2&quot;&gt;
+                            &lt;staff n=&quot;1&quot;&gt;
+                                &lt;layer n=&quot;1&quot;&gt;
+                                    &lt;note pname=&quot;g&quot; oct=&quot;4&quot; dur=&quot;4&quot;/&gt;
+                                    &lt;note pname=&quot;a&quot; oct=&quot;4&quot; dur=&quot;4&quot;/&gt;
+                                    &lt;note pname=&quot;b&quot; oct=&quot;4&quot; dur=&quot;4&quot;/&gt;
+                                    &lt;note pname=&quot;c&quot; oct=&quot;5&quot; dur=&quot;4&quot;/&gt;
+                                &lt;/layer&gt;
+                            &lt;/staff&gt;
+                        &lt;/measure&gt;
+                        &lt;measure n=&quot;3&quot;&gt;
+                            &lt;staff n=&quot;1&quot;&gt;
+                                &lt;layer n=&quot;1&quot;&gt;
+                                    &lt;note pname=&quot;g&quot; oct=&quot;4&quot; dur=&quot;4&quot;/&gt;
+                                    &lt;note pname=&quot;a&quot; oct=&quot;4&quot; dur=&quot;4&quot;/&gt;
+                                    &lt;note pname=&quot;b&quot; oct=&quot;4&quot; dur=&quot;4&quot;/&gt;
+                                    &lt;note pname=&quot;c&quot; oct=&quot;5&quot; dur=&quot;4&quot;/&gt;
+                                &lt;/layer&gt;
+                            &lt;/staff&gt;
+                        &lt;/measure&gt;
+                    &lt;/section&gt;
+                &lt;/score&gt;
+            &lt;/mdiv&gt;
+        &lt;/body&gt;
+    &lt;/music&gt;
+&lt;/mei&gt;</c:set>
+
+    <!-- MEI Editor Container -->
+    <div class="editor editor-mei" data-editor-id="#{cc.clientId}" data-editor="mei">
+        <h:inputTextarea
+            id="meiInput"
+            value="#{defaultMei}"
+            styleClass="visually-hidden"
+        />
+        <!-- CodeMirror Editor Panel -->
+        <div class="editor-panel mei-code-panel">
+            <div class="panel-header">
+                <h6>MEI Code Editor</h6>
+            </div>
+            <div class="panel-body">
+                <div class="editor">
+                    <div class="editor-menubar">
+                        <div class="editor-menu-group">
+                            <button
+                                type="button"
+                                id="#{cc.attrs.id}FormatButton"
+                                class="btn"
+                                aria-label="Format XML"
+                                title="Format XML"
+                                data-bs-toggle="tooltip">
+                                <span class="fa fa-code" aria-hidden="true"></span>
+                            </button>
+                            <button
+                                type="button"
+                                id="#{cc.attrs.id}ValidateButton"
+                                class="btn"
+                                aria-label="Validate XML"
+                                title="Validate XML"
+                                data-bs-toggle="tooltip">
+                                <span class="fa fa-check" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="editor-menu-group">
+                            <button
+                                type="button"
+                                id="#{cc.attrs.id}UpdateButton"
+                                class="btn"
+                                aria-label="Update Notation"
+                                title="Update Notation"
+                                data-bs-toggle="tooltip"
+                                data-command="refresh"
+                                >
+                                <span class="fa fa-refresh" aria-hidden="true"></span>
+                            </button>
+                            <label class="form-check-label">
+                                <input type="checkbox" id="#{cc.attrs.id}AutoUpdateCheckbox" class="form-check-input" checked="true"/>
+                                Auto-update notation
+                            </label>
+                        </div>
+                    </div>
+                    <div class="codemirror"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Verovio Notation Panel -->
+        <div class="editor-panel mei-notation-panel">
+            <div class="panel-header">
+                <h6>Music Notation</h6>
+            </div>
+            <div class="panel-body">
+                <editor:verovio
+                    content="#{defaultMei}" />
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="editor-status">
+            <span id="#{cc.attrs.id}StatusText" class="status-text">Ready</span>
+            <span id="#{cc.attrs.id}ErrorCount" class="error-count" style="display: none;">
+                <span class="fa fa-exclamation-triangle text-warning" aria-hidden="true"></span>
+                <span class="count">0</span> errors
+            </span>
+        </div>
+    </div>
+    <!-- Include MEI Editor JavaScript -->
+    <h:outputScript name="js/dist/mei-editor.js" target="body"/>
+
+</ui:composition>
