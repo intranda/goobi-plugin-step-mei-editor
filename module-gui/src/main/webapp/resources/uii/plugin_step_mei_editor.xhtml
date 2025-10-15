@@ -83,12 +83,165 @@
                 <section:body padding="true">
                     <div class="row">
                         <div class="col">
-                            <!-- Thumbnails here -->
+                            <!-- View Mode Toggle -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="btn-group" role="group">
+                                    <button
+                                        jsf:action="#{AktuelleSchritteForm.myPlugin.setViewMode('image')}"
+                                        class="btn btn-#{AktuelleSchritteForm.myPlugin.imageView ? 'primary' : 'outline-primary'}"
+                                        >
+                                        <f:ajax render="@form" />
+                                        <span class="fa fa-picture-o" />
+                                    </button>
+                                    <button
+                                        jsf:action="#{AktuelleSchritteForm.myPlugin.setViewMode('thumbnail')}"
+                                        class="btn btn-#{AktuelleSchritteForm.myPlugin.thumbnailView ? 'primary' : 'outline-primary'}"
+                                        >
+                                        <f:ajax render="@form" />
+                                        <span class="fa fa-th" />
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- IMAGE VIEW MODE -->
+                            <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.imageView}">
+                                <!-- Main Image Display -->
+                                <div class="text-center mb-3" style="min-height: 400px; background-color: #f8f9fa;">
+                                    <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage != null}">
+                                        <canvas
+                                            class="thumb-canvas"
+                                            data-image_small="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
+                                            data-image_large="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
+                                            title="#{AktuelleSchritteForm.myPlugin.currentImage.imageName}"
+                                            id="mainImage"></canvas>
+                                        <div class="mt-2">
+                                            <small class="text-muted">#{AktuelleSchritteForm.myPlugin.currentImage.imageName}</small>
+                                        </div>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage == null}">
+                                        <div class="alert alert-info mt-5">#{msgs.noImagesFound}</div>
+                                    </h:panelGroup>
+                                </div>
+                                <!-- Enhanced Paginator -->
+                                <div class="dataTables__paginator">
+                                    <!-- First -->
+                                     <button
+                                        class="btn btn-blank"
+                                        aria-label="#{msgs.firstPage}"
+                                        jsf:action="#{AktuelleSchritteForm.myPlugin.firstImage}"
+                                        jsf:id="navfirst">
+                                        <span class="fa fa-angle-double-left"/>
+                                        <f:ajax render="@form"/>
+                                        <c:if test="#{AktuelleSchritteForm.myPlugin.currentImageIndex == 0}">
+                                            <f:passThroughAttribute name="disabled" value="true" />
+                                        </c:if>
+                                    </button>
+
+                                    <!-- Previous -->
+                                    <button
+                                        class="btn btn-primary-400"
+                                        jsf:action="#{AktuelleSchritteForm.myPlugin.previousImage}"
+                                        jsf:id="navprev">
+                                        <span class="fa fa-angle-left"/>
+                                        <h:outputText value=" #{msgs.previousImage}"/>
+                                        <f:ajax render="@form"/>
+                                        <c:if test="#{AktuelleSchritteForm.myPlugin.currentImageIndex == 0}">
+                                            <f:passThroughAttribute name="disabled" value="true" />
+                                        </c:if>
+                                    </button>
+
+                                    <!-- Page info and jump -->
+                                     <div class="dataTables__paginator__page-count">
+                                        <button
+                                            type="button"
+                                            class="btn btn-link text-black"
+                                            id="txtMoveTo1"
+                                            onclick="document.querySelector('[id$=txtMoveTo2]').style.display='inline';
+                                                document.querySelector('[id$=txtMoveTo1]').style.display='none';
+                                                document.querySelector('[id$=txtMoveTo2]').focus();
+                                                document.querySelector('[id$=txtMoveTo2]').select();">
+                                            #{msgs.seite} #{AktuelleSchritteForm.myPlugin.pageJumpInput} #{msgs.von} #{AktuelleSchritteForm.myPlugin.imageCount}
+                                        </button>
+
+                                        <h:inputText
+                                            id="txtMoveTo2"
+                                            forceId="false"
+                                            value="#{AktuelleSchritteForm.myPlugin.pageJumpInput}"
+                                            style="display:none;width:30px"
+                                            required="true"
+                                            onblur="document.querySelector('[id$=txtMoveTo2]').style.display='none';document.querySelector('[id$=txtMoveTo1]').style.display='inline';"
+                                            onkeypress="return submitEnter(document.querySelector('[id$=cmdMoveTo]').id,event)" />
+                                        <h:commandButton
+                                            action="#{AktuelleSchritteForm.myPlugin.jumpToPage}"
+                                            id="cmdMoveTo"
+                                            forceId="false"
+                                            value="go"
+                                            style="display:none" >
+                                        </h:commandButton>
+                                    </div>
+
+                                    <!-- Next -->
+                                    <button
+                                        class="btn btn-primary-400"
+                                        jsf:action="#{AktuelleSchritteForm.myPlugin.nextImage}"
+                                        jsf:id="navnext">
+                                        <h:outputText value="#{msgs.nextImage} "/>
+                                        <span class="fa fa-angle-right" />
+                                        <f:ajax render="@form" />
+                                        <c:if test="#{AktuelleSchritteForm.myPlugin.currentImageIndex >= AktuelleSchritteForm.myPlugin.imageCount - 1}">
+                                            <f:passThroughAttribute name="disabled" value="true" />
+                                        </c:if>
+                                    </button>
+
+                                    <!-- Last -->
+                                    <button
+                                        class="btn btn-blank"
+                                        aria-label="#{msgs.lastImage}"
+                                        jsf:action="#{AktuelleSchritteForm.myPlugin.lastImage}"
+                                        jsf:id="navlast">
+                                        <span class="fa fa-angle-double-right" />
+                                        <f:ajax render="@form" />
+                                        <c:if test="#{AktuelleSchritteForm.myPlugin.currentImageIndex >= AktuelleSchritteForm.myPlugin.imageCount - 1}">
+                                            <f:passThroughAttribute name="disabled" value="true" />
+                                        </c:if>
+                                    </button>
+                                </div>
+                            </h:panelGroup>
+
+                            <!-- THUMBNAIL VIEW MODE -->
+                            <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.thumbnailView}">
+                                <div class="thumbnail-gallery" style="max-height: 600px; overflow-y: auto;">
+                                    <div class="row g-3">
+                                        <ui:repeat value="#{AktuelleSchritteForm.myPlugin.imageList}" var="image" varStatus="status">
+                                            <div class="col-6 col-md-4 col-lg-3">
+                                                <h:commandLink action="#{AktuelleSchritteForm.myPlugin.selectImage(status.index)}"
+                                                                styleClass="d-block thumbnail-link">
+                                                    <div class="thumbnail-wrapper #{AktuelleSchritteForm.myPlugin.currentImageIndex == status.index ? 'active' : ''}">
+                                                        <canvas
+                                                            class="thumb-canvas"
+                                                            data-image_small="#{image.largeThumbnailUrl}"
+                                                            data-image_large="#{image.largeThumbnailUrl}"
+                                                            title="#{image.tooltip}"
+                                                            id="thumb_full_#{status.index}"
+                                                            style="width: 100%; height: auto;"></canvas>
+                                                        <div class="mt-1 text-center">
+                                                            <small class="d-block text-truncate fw-bold">
+                                                                #{status.index + 1}
+                                                            </small>
+                                                            <small class="d-block text-truncate text-muted" style="font-size: 0.65rem;">
+                                                                #{image.imageName}
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </h:commandLink>
+                                            </div>
+                                        </ui:repeat>
+                                    </div>
+                                </div>
+                            </h:panelGroup>
                         </div>
                         <div class="col">
-                            <!-- MEI Editor here -->
-                            <!-- needs: a method that returns the MEI-XML -->
-                            <!-- <mei:editor src="#{}"></mei:editor> -->
+                            <p class="text-muted">MEI Editor here</p>
                         </div>
                     </div>
                 </section:body>
@@ -125,6 +278,18 @@
                 </section:footer>
             </section:section>
         </h:form>
+
+                <script>
+					faces.ajax
+						.addOnEvent(function(
+								data) {
+							switch (data.status) {
+							case 'success':
+								loadImages();
+								break;
+							}
+						})
+				</script>
     </ui:define>
 
 </ui:composition>
