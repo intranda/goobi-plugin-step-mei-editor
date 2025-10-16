@@ -136,7 +136,6 @@ public class MeiEditorStepPlugin implements IStepPluginVersion2 {
             if ("master".equals(imageFolder)) {
                 imageFolderPath = process.getImagesTifDirectory(true);
             } else if ("media".equals(imageFolder)) {
-                // Use VariableReplacer to resolve the template string
                 String mediaFolderTemplate = de.sub.goobi.config.ConfigurationHelper.getInstance().getProcessImagesMainDirectoryName();
                 String mediaFolderName = de.sub.goobi.helper.VariableReplacer.simpleReplace(mediaFolderTemplate, process);
                 imageFolderPath = process.getImagesDirectory() + "/" + mediaFolderName;
@@ -147,7 +146,6 @@ public class MeiEditorStepPlugin implements IStepPluginVersion2 {
             Path imageDir = Paths.get(imageFolderPath);
 
             if (StorageProvider.getInstance().isFileExists(imageDir)) {
-                // Use Goobi's filter for image files
                 List<String> imageNameList = StorageProvider.getInstance().list(imageFolderPath, NIOFileUtils.imageOrObjectNameFilter);
 
                 int order = 1;
@@ -244,15 +242,21 @@ public class MeiEditorStepPlugin implements IStepPluginVersion2 {
      */
     public void jumpToPage() {
         try {
-            int pageNum = Integer.parseInt(pageJumpInput);
+            if (pageJumpInput == null || pageJumpInput.trim().isEmpty()) {
+                return;
+            }
+            int pageNum = Integer.parseInt(pageJumpInput.trim());
             // Convert 1-based to 0-based index
             int index = pageNum - 1;
             if (index >= 0 && index < imageList.size()) {
                 currentImageIndex = index;
                 currentImage = imageList.get(index);
             }
+            // Clear input after successful jump
+            pageJumpInput = "";
         } catch (NumberFormatException e) {
             log.warn("Invalid page number: " + pageJumpInput);
+            pageJumpInput = "";
         }
     }
 
