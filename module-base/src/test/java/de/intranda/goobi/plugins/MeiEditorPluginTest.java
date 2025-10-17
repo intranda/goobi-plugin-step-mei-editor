@@ -116,6 +116,8 @@ public class MeiEditorPluginTest {
         EasyMock.expect(configurationHelper.isUseMasterDirectory()).andReturn(true).anyTimes();
         EasyMock.expect(configurationHelper.getConfigurationFolder()).andReturn(resourcesFolder).anyTimes();
         EasyMock.expect(configurationHelper.getNumberOfMetaBackups()).andReturn(0).anyTimes();
+        EasyMock.expect(configurationHelper.getAdditionalProcessFolderName(EasyMock.anyString(), EasyMock.anyString())).andReturn("mei").anyTimes();
+        EasyMock.expect(configurationHelper.getScriptCreateDirMeta()).andReturn("").anyTimes();
         EasyMock.replay(configurationHelper);
 
         PowerMock.mockStatic(VariableReplacer.class);
