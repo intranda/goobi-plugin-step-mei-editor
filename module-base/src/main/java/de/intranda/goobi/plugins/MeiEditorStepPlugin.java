@@ -1,5 +1,7 @@
 package de.intranda.goobi.plugins;
 
+import java.io.BufferedWriter;
+
 /**
  * This file is part of a plugin for Goobi - a Workflow tool for the support of mass digitization.
  *
@@ -20,6 +22,10 @@ package de.intranda.goobi.plugins;
  */
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -27,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.configuration.SubnodeConfiguration;
+import org.apache.commons.lang3.StringUtils;
 import org.goobi.beans.Process;
 import org.goobi.beans.Step;
 import org.goobi.production.enums.PluginGuiType;
@@ -36,6 +43,7 @@ import org.goobi.production.enums.StepReturnValue;
 import org.goobi.production.plugin.interfaces.IStepPluginVersion2;
 
 import de.sub.goobi.config.ConfigPlugins;
+import de.sub.goobi.helper.Helper;
 import de.sub.goobi.helper.NIOFileUtils;
 import de.sub.goobi.helper.StorageProvider;
 import de.sub.goobi.helper.exceptions.DAOException;
@@ -50,12 +58,17 @@ import net.xeoh.plugins.base.annotations.PluginImplementation;
 @Log4j2
 public class MeiEditorStepPlugin implements IStepPluginVersion2 {
 
+    // required configuration: goobi_config.properties: process.folder.ocr.mei={processtitle}_mei
+
+    private static final long serialVersionUID = 4892402464876940955L;
+
     @Getter
     private String title = "intranda_step_mei_editor";
     @Getter
     private Step step;
-    @Getter
-    private String value;
+
+    private Process process;
+
     @Getter
     private boolean allowTaskFinishButtons;
     private String returnPath;
@@ -83,6 +96,14 @@ public class MeiEditorStepPlugin implements IStepPluginVersion2 {
     @Getter
     @Setter
     private String viewMode = "image";
+
+    // path to the file in the file system
+    private Path meiFile;
+
+    // actual content, at the moment one string
+    @Getter
+    @Setter
+    private String meiContent;
 
     /**
      * Toggle between image and thumbnail view
@@ -113,15 +134,52 @@ public class MeiEditorStepPlugin implements IStepPluginVersion2 {
     public void initialize(Step step, String returnPath) {
         this.returnPath = returnPath;
         this.step = step;
+        process = step.getProzess();
+
+        try {
+            String meiFolder = process.getConfiguredImageFolder("ocr.mei");
+            // required folder is not configured, abort
+            if (StringUtils.isBlank(meiFolder)) {
+                Helper.setFehlerMeldung("Abort, MEI folder is not set");
+                return;
+            }
+            // otherwise check, if an mei file exists
+            List<Path> filesInFolder = StorageProvider.getInstance().listFiles(meiFolder);
+            if (filesInFolder.isEmpty()) {
+                // create a new one, if its missing
+                meiFile = Paths.get(meiFolder, process.getTitel() + ".xml");
+                StorageProvider.getInstance().createDirectories(meiFile.getParent());
+                Files.createFile(meiFile);
+                meiContent = "";
+            } else {
+                // use first (and only) file, read content
+                meiFile = filesInFolder.get(0);
+
+                if (StorageProvider.getInstance().isFileExists(meiFile)) {
+                    meiContent = Files.readString(meiFile);
+                }
+            }
+        } catch (IOException | SwapException | DAOException e) {
+            log.error(e);
+        }
 
         // read parameters from correct block in configuration file
         SubnodeConfiguration myconfig = ConfigPlugins.getProjectAndStepConfig(title, step);
-        value = myconfig.getString("value", "default value");
         allowTaskFinishButtons = myconfig.getBoolean("allowTaskFinishButtons", false);
         imageFolder = myconfig.getString("imageFolder", "media");
 
         // Load images
         loadImages();
+    }
+
+    public void saveContent() {
+        try (OutputStream os = StorageProvider.getInstance().newOutputStream(meiFile);
+                BufferedWriter outwriter = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
+            outwriter.write(meiContent);
+        } catch (IOException e) {
+            log.error(e);
+        }
+
     }
 
     /**
@@ -152,7 +210,6 @@ public class MeiEditorStepPlugin implements IStepPluginVersion2 {
                 for (String imagename : imageNameList) {
                     try {
                         // Create Image object with Process, folder name, filename, order, and thumbnail size
-                        String folderName = Paths.get(imageFolderPath).getFileName().toString();
                         Image image = new Image(process, imageFolderPath, imagename, order, thumbnailSize);
                         imageList.add(image);
                         order++;
