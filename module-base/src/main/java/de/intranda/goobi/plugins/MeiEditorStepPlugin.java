@@ -84,8 +84,13 @@ public class MeiEditorStepPlugin implements IStepPluginVersion2 {
     private String imageFolder = "media"; // or "media" for derivatives
     @Setter
     private Image currentImage;
+
     @Getter
+    @Setter
     private int thumbnailSize = 200;
+
+    @Getter
+    private List<Integer> thumbnailSizeOptions = new ArrayList<>();
 
     // For direct page jump
     @Getter
@@ -168,6 +173,25 @@ public class MeiEditorStepPlugin implements IStepPluginVersion2 {
         allowTaskFinishButtons = myconfig.getBoolean("allowTaskFinishButtons", false);
         imageFolder = myconfig.getString("imageFolder", "media");
 
+        thumbnailSize = myconfig.getInt("thumbnailSize", 200);
+        String[] sizeArray = myconfig.getStringArray("thumbnailSizes");
+        if (sizeArray != null && sizeArray.length > 0) {
+            for (String size : sizeArray) {
+                try {
+                    thumbnailSizeOptions.add(Integer.parseInt(size.trim()));
+                } catch (NumberFormatException e) {
+                    log.warn("Invalid thumbnail size in config: " + size);
+                }
+            }
+        }
+        // If no options configured, add default sizes
+        if (thumbnailSizeOptions.isEmpty()) {
+            thumbnailSizeOptions.add(100);
+            thumbnailSizeOptions.add(200);
+            thumbnailSizeOptions.add(300);
+            thumbnailSizeOptions.add(400);
+        }
+
         // Load images
         loadImages();
     }
@@ -227,6 +251,20 @@ public class MeiEditorStepPlugin implements IStepPluginVersion2 {
             }
         } catch (IOException | SwapException e) {
             log.error("Error loading images from folder '" + imageFolder + "'", e);
+        }
+    }
+
+    /**
+     * Change thumbnail size and reload images
+     */
+    public void changeThumbnailSize() {
+        log.info("Changing thumbnail size to: " + thumbnailSize);
+        // Reload images with new thumbnail size
+        loadImages();
+        // Reset to first image to avoid index out of bounds
+        if (!imageList.isEmpty()) {
+            currentImageIndex = 0;
+            currentImage = imageList.get(0);
         }
     }
 

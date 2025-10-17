@@ -132,6 +132,25 @@
                                         <f:ajax render="@form" />
                                     </button>
                                 </div>
+                                <!-- Thumbnail Size Selector -->
+                                <h:panelGroup
+                                    rendered="#{AktuelleSchritteForm.myPlugin.thumbnailView}"
+                                    layout="block"
+                                    styleClass="d-flex align-items-center gap-2">
+                                    <h:outputLabel
+                                        for="thumbnailSizeSelect"
+                                        value="#{msgs.thumbnailSize}:"
+                                        styleClass="mb-0 text-muted small" />
+                                    <h:selectOneMenu
+                                        id="thumbnailSizeSelect"
+                                        value="#{AktuelleSchritteForm.myPlugin.thumbnailSize}"
+                                        styleClass="form-select form-select-sm"
+                                        style="width: auto;">
+                                        <f:selectItems value="#{AktuelleSchritteForm.myPlugin.thumbnailSizeOptions}" />
+                                        <f:ajax listener="#{AktuelleSchritteForm.myPlugin.changeThumbnailSize}" render="@form" />
+                                    </h:selectOneMenu>
+                                    <span class="text-muted small">px</span>
+                                </h:panelGroup>
                             </div>
 
                             <!-- IMAGE VIEW MODE -->
@@ -235,19 +254,10 @@
 
                             <!-- THUMBNAIL VIEW MODE -->
                             <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.thumbnailView}">
-                                <div
-                                    id="thumbnailsContainer"
-                                    class="overflow-y-auto"
-                                    style="height: 80vh;">
-                                    <div
-                                        class="thumbnails"
-                                        style="&#45;&#45;thumb-size: #{Metadaten.thumbnailSize + 50}px;">
-                                        <ui:repeat
-                                            value="#{AktuelleSchritteForm.myPlugin.imageList}"
-                                            var="image"
-                                            varStatus="status">
-                                            <div
-                                                class="thumbnails__thumb #{AktuelleSchritteForm.myPlugin.currentImageIndex eq status.index ? 'active' : ''}">
+                                <div id="thumbnailsContainer" class="overflow-y-auto" style="height: 80vh;">
+                                    <div class="thumbnails" style="&#45;&#45;thumb-size: #{AktuelleSchritteForm.myPlugin.thumbnailSize + 50}px;">
+                                        <ui:repeat value="#{AktuelleSchritteForm.myPlugin.imageList}" var="image" varStatus="status">
+                                            <div class="thumbnails__thumb #{AktuelleSchritteForm.myPlugin.currentImageIndex eq status.index ? 'active' : ''}">
                                                 <div class="thumbnails__thumb-image">
                                                     <h:commandLink
                                                         action="#{AktuelleSchritteForm.myPlugin.selectImage(status.index)}"
@@ -260,10 +270,12 @@
                                                             id="thumb_full_#{status.index}"
                                                             style="width: 100%; height: auto;"></canvas>
                                                         <div class="mt-1 text-center">
-                                                            <small class="d-block text-truncate fw-bold"> #{status.index + 1} </small>
-                                                            <small
-                                                                class="d-block text-truncate text-muted"
-                                                                style="font-size: 0.65rem;"> #{image.imageName} </small>
+                                                            <small class="d-block text-truncate fw-bold">
+                                                                #{status.index + 1}
+                                                            </small>
+                                                            <small class="d-block text-truncate text-muted" style="font-size: 0.65rem;">
+                                                                #{image.imageName}
+                                                            </small>
                                                         </div>
                                                     </h:commandLink>
                                                 </div>
