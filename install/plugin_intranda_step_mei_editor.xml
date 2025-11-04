@@ -6,16 +6,27 @@
           3.) project name matches and step name is *
           4.) project name and step name are *
 	-->
-    
+
     <config>
         <!-- which projects to use for (can be more then one, otherwise use *) -->
         <project>*</project>
         <step>*</step>
-        
-        <!-- sample parameter -->
-        <value>test</value>
+
         <!-- display button to finish the task directly from within the entered plugin -->
         <allowTaskFinishButtons>true</allowTaskFinishButtons>
+
+        <!-- Image display options -->
+        <!-- Default thumbnail size in px -->
+        <thumbnailSize>200</thumbnailSize>
+
+        <!-- Available thumbnail sizes for dropdown (optional) -->
+        <!-- If not specified, defaults to: 100, 200, 300, 400 -->
+        <thumbnailSizes>100</thumbnailSizes>
+        <thumbnailSizes>150</thumbnailSizes>
+        <thumbnailSizes>200</thumbnailSizes>
+        <thumbnailSizes>300</thumbnailSizes>
+        <thumbnailSizes>400</thumbnailSizes>
+
     </config>
 
 </config_plugin>
