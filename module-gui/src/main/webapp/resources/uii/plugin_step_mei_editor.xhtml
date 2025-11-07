@@ -287,60 +287,64 @@
                         </h:form>
                     </div>
                     <div class="col">
-                        <p class="text-muted">
-                            <h:inputTextarea value="#{AktuelleSchritteForm.myPlugin.meiContent}" />
-                        </p>
+                        <h:form id="meiForm">
+                            <mei:editor
+                                content="#{AktuelleSchritteForm.myPlugin.meiContent}" />
+                        </h:form>
+                        <h:form
+                            id="footerForm"
+                            styleClass="p-3">
+                            <button:row>
+                                <!-- Save -->
+                                <button
+                                    jsf:id="absenden"
+                                    class="btn btn-blank"
+                                    form="meiForm"
+                                    jsf:action="#{AktuelleSchritteForm.myPlugin.saveContent}">
+                                    <span
+                                        aria-hidden="true"
+                                        class="fa fa-save" />
+                                    <span>
+                                        <h:outputText value="#{msgs.speichern}" />
+                                    </span>
+                                    <f:setPropertyActionListener
+                                        target="#{NavigationForm.uiStatus.pluginSimulation}"
+                                        value="#{false}" />
+                                    <f:ajax execute="meiForm" render="@none" />
+                                </button>
+                                <button
+                                    class="btn btn-success"
+                                    jsf:id="finishAndClose"
+                                    type="submit"
+                                    form="meiForm"
+                                    jsf:rendered="#{NavigationForm.uiStatus.pluginSimulation != true and AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
+                                    jsf:action="#{AktuelleSchritteForm.SchrittDurchBenutzerAbschliessen}">
+                                    <span
+                                        aria-hidden="true"
+                                        class="fa fa-check" />
+                                    <span>
+                                        <h:outputText value="#{msgs.task_leavePluginAndFinishTask}" />
+                                    </span>
+                                    <f:setPropertyActionListener
+                                        target="#{NavigationForm.uiStatus.pluginSimulation}"
+                                        value="#{false}" />
+                                </button>
+                            </button:row>
+                        </h:form>
                     </div>
                 </div>
             </section:body>
-            <section:footer>
-                <h:form id="footerForm">
-                    <button:row>
-                        <!-- Save -->
-                        <button
-                            jsf:id="absenden"
-                            class="btn btn-blank"
-                            jsf:action="#{AktuelleSchritteForm.myPlugin.saveContent}">
-                            <span
-                                aria-hidden="true"
-                                class="fa fa-save" />
-                            <span>
-                                <h:outputText value="#{msgs.speichern}" />
-                            </span>
-                            <f:setPropertyActionListener
-                                target="#{NavigationForm.uiStatus.pluginSimulation}"
-                                value="#{false}" />
-                        </button>
-                        <button
-                            class="btn btn-success"
-                            jsf:id="finishAndClose"
-                            type="submit"
-                            jsf:rendered="#{NavigationForm.uiStatus.pluginSimulation != true and AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
-                            jsf:action="#{AktuelleSchritteForm.SchrittDurchBenutzerAbschliessen}">
-                            <span
-                                aria-hidden="true"
-                                class="fa fa-check" />
-                            <span>
-                                <h:outputText value="#{msgs.task_leavePluginAndFinishTask}" />
-                            </span>
-                            <f:setPropertyActionListener
-                                target="#{NavigationForm.uiStatus.pluginSimulation}"
-                                value="#{false}" />
-                        </button>
-                    </button:row>
-                </h:form>
-            </section:footer>
         </section:section>
 
         <script>
-									faces.ajax.addOnEvent(function(data) {
-										switch (data.status) {
-										case 'success':
-											loadImages();
-											break;
-										}
-									})
-								</script>
+            faces.ajax.addOnEvent(function(data) {
+                switch (data.status) {
+                case 'success':
+                    loadImages();
+                    break;
+                }
+            })
+        </script>
     </ui:define>
 
 </ui:composition>

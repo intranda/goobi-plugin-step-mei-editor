@@ -1,9 +1,8 @@
 /**
  * MEI Editor - Integrates CodeMirror and Verovio for side-by-side MEI editing
- * Uses its own CodeMirror instance and existing Verovio implementation
  */
 
-// Import CodeMirror 6 directly for our own instance
+// Import CodeMirror 6
 import { basicSetup } from "codemirror";
 import { EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
@@ -93,6 +92,9 @@ class MEIEditor {
                     }),
                 ],
             }),
+            extensions: [
+                EditorView.lineWrapping,
+            ],
             parent: this.codeMirrorDiv
         });
 
