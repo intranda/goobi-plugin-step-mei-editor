@@ -4,7 +4,7 @@
   <parent>
     <groupId>io.goobi.workflow.plugin</groupId>
     <artifactId>plugin-step-mei-editor</artifactId>
-    <version>25.10</version>
+    <version>25.10.2</version>
   </parent>
   <artifactId>plugin-step-mei-editor-gui</artifactId>
   <packaging>jar</packaging>
@@ -13,6 +13,10 @@
       <resource>
         <targetPath>META-INF/resources</targetPath>
         <directory>src/main/webapp/resources</directory>
+      </resource>
+      <resource>
+        <targetPath>META-INF</targetPath>
+        <directory>src/main/webapp/META-INF</directory>
       </resource>
     </resources>
   </build>

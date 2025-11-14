@@ -8,6 +8,7 @@ target/
 bin/
 build/
 node_modules/
+resources/MEIEditor/
 
 # Eclipse
 .project
@@ -17,4 +18,3 @@ node_modules/
 # IntelliJ IDEA
 .idea
 *.iml
-

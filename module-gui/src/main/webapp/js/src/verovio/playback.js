@@ -2,8 +2,10 @@
 // This module is designed to be imported and used by the main Verovio editor class.
 
 import * as Tone from 'tone';
-import { Midi } from '@tonejs/midi';
+import * as ToneMidi from '@tonejs/midi';
 import { createMIDIBasedSoundMapping } from './sounds.js';
+
+const { Midi } = ToneMidi;
 
 let synth = null;
 let soundMappings = null; // Store intelligent sound mappings
