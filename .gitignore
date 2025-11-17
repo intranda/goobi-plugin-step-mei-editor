@@ -8,7 +8,7 @@ target/
 bin/
 build/
 node_modules/
-resources/MEIEditor/
+MEIEditor/
 
 # Eclipse
 .project
