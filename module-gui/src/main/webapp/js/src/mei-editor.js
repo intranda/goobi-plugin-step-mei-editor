@@ -67,6 +67,7 @@ class MEIEditor {
 
         this.setupSynchronization();
         this.connectControls();
+        this.setupCollapseListeners();
     }
 
     createCodeMirrorInstance() {
@@ -291,6 +292,27 @@ class MEIEditor {
         });
 
         return formatted.trim();
+    }
+
+    setupCollapseListeners() {
+        // Find the CodeMirror panel body
+        const codePanel = this.container.querySelector('.mei-code-panel .panel-body');
+
+        if (!codePanel) {
+            console.warn('MEI Editor: Could not find code panel for collapse listener');
+            return;
+        }
+
+        // Listen for Bootstrap collapse events
+        codePanel.addEventListener('hidden.bs.collapse', () => {
+            // CodeMirror is now collapsed, add class to container
+            this.container.classList.add('code-collapsed');
+        });
+
+        codePanel.addEventListener('shown.bs.collapse', () => {
+            // CodeMirror is now shown, remove class from container
+            this.container.classList.remove('code-collapsed');
+        });
     }
 }
 

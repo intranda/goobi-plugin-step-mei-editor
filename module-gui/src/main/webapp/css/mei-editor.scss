@@ -8,7 +8,6 @@
         display: flex;
         flex-direction: column;
         max-height: 80vh;
-        height: 80vh;
         overflow: hidden;
     }
 
@@ -16,20 +15,86 @@
     &-panel {
         display: flex;
         flex-direction: column;
-        flex: 1;
+        flex: 1 1 auto;
         min-height: 0; // Allow flex items to shrink below content size
         overflow: hidden;
 
         .panel-header {
+            align-items: center;
+            display: flex;
             flex-shrink: 0;
+            gap: 1rem;
+            padding: 0.5rem;
+            width: 100%;
+
+            .fa {
+                margin-block: auto;
+            }
+
+            h6 {
+                margin: 0;
+            }
         }
 
         .panel-body {
-            flex: 1;
+            flex: 1 1 auto;
             min-height: 0;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+
+            // When collapsed, don't take up any space
+            &.collapse:not(.show) {
+                flex: 0 0 0;
+                min-height: 0;
+                overflow: hidden;
+            }
+        }
+
+        // CodeMirror panel should get at least 50% and grow to fill space
+        &.mei-code-panel {
+            flex: 1 1 50%;
+            min-height: 50%;
+
+            // When CodeMirror is collapsed, it takes no space
+            .panel-body.collapse:not(.show) {
+                flex: 0 0 0;
+                min-height: 0;
+            }
+        }
+
+        // Verovio panel behavior depends on both panels' states
+        &.mei-notation-panel {
+            flex: 0 0 auto;
+            max-height: 40vh; // Fixed maximum height when CodeMirror is open
+
+            // Ensure panel body respects the max height
+            .panel-body {
+                max-height: calc(40vh - 3rem); // Subtract header height
+
+                &.collapse.show {
+                    flex: 1 1 auto;
+                    overflow: hidden;
+                }
+
+                &.collapse:not(.show) {
+                    flex: 0 0 0;
+                    max-height: 0;
+                }
+            }
+        }
+    }
+
+    // When CodeMirror is collapsed, add this class to editor-mei container
+    // This allows Verovio to grow to full height
+    &-mei.code-collapsed {
+        .editor-panel.mei-notation-panel {
+            flex: 1 1 auto;
+            max-height: 80vh; // Can grow to full editor height
+
+            .panel-body {
+                max-height: calc(80vh - 3rem);
+            }
         }
     }
 
