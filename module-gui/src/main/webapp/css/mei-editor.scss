@@ -1,9 +1,7 @@
-// Main editor container
 .editor {
     display: flex;
     flex-direction: column;
 
-    // MEI Editor - vertical layout with max height
     &-mei {
         display: flex;
         flex-direction: column;
@@ -11,12 +9,11 @@
         overflow: hidden;
     }
 
-    // Individual panels (CodeMirror and Verovio)
     &-panel {
         display: flex;
         flex-direction: column;
         flex: 1 1 auto;
-        min-height: 0; // Allow flex items to shrink below content size
+        min-height: 0;
         overflow: hidden;
 
         .panel-header {
@@ -43,7 +40,6 @@
             display: flex;
             flex-direction: column;
 
-            // When collapsed, don't take up any space
             &.collapse:not(.show) {
                 flex: 0 0 0;
                 min-height: 0;
@@ -51,26 +47,22 @@
             }
         }
 
-        // CodeMirror panel should get at least 50% and grow to fill space
         &.mei-code-panel {
             flex: 1 1 50%;
             min-height: 50%;
 
-            // When CodeMirror is collapsed, it takes no space
             .panel-body.collapse:not(.show) {
                 flex: 0 0 0;
                 min-height: 0;
             }
         }
 
-        // Verovio panel behavior depends on both panels' states
         &.mei-notation-panel {
             flex: 0 0 auto;
-            max-height: 40vh; // Fixed maximum height when CodeMirror is open
+            max-height: 40vh;
 
-            // Ensure panel body respects the max height
             .panel-body {
-                max-height: calc(40vh - 3rem); // Subtract header height
+                max-height: calc(40vh - 3rem);
 
                 &.collapse.show {
                     flex: 1 1 auto;
@@ -85,12 +77,10 @@
         }
     }
 
-    // When CodeMirror is collapsed, add this class to editor-mei container
-    // This allows Verovio to grow to full height
     &-mei.code-collapsed {
         .editor-panel.mei-notation-panel {
             flex: 1 1 auto;
-            max-height: 80vh; // Can grow to full editor height
+            max-height: 80vh;
 
             .panel-body {
                 max-height: calc(80vh - 3rem);
@@ -111,7 +101,6 @@
         height: 100%;
     }
 
-    // Menu bar styling
     .editor-menubar {
         display: flex;
         flex-wrap: wrap;
