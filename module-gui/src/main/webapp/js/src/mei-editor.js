@@ -58,11 +58,9 @@ class MEIEditor {
         // Just verify that Verovio is available globally - don't initialize it
         if (!window.app) {
             console.error('Verovio app not available on window.app');
-        } else {
-y        }
+        }
 
         this.setupSynchronization();
-        this.connectControls();
         this.setupCollapseListeners();
     }
 
