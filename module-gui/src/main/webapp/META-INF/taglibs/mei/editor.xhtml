@@ -16,32 +16,19 @@
             />
         <!-- CodeMirror Editor Panel -->
         <div class="editor-panel mei-code-panel">
-            <div class="panel-header">
-                <h6>MEI Code Editor</h6>
-            </div>
-            <div class="panel-body">
+            <button
+                type="button"
+                class="btn panel-header"
+                data-bs-toggle="collapse"
+                data-bs-target="#codeMirrorPanel"
+                aria-expanded="true"
+                aria-controls="codeMirrorPanel">
+                <span class="fa fa-code" aria-hidden="true"></span>
+                <h6>MEI</h6>
+            </button>
+            <div id="codeMirrorPanel" class="panel-body collapse show">
                 <div class="editor">
                     <div class="editor-menubar">
-                        <div class="editor-menu-group">
-                            <button
-                                type="button"
-                                id="FormatButton"
-                                class="btn"
-                                aria-label="Format XML"
-                                title="Format XML"
-                                data-bs-toggle="tooltip">
-                                <span class="fa fa-code" aria-hidden="true"></span>
-                            </button>
-                            <button
-                                type="button"
-                                id="ValidateButton"
-                                class="btn"
-                                aria-label="Validate XML"
-                                title="Validate XML"
-                                data-bs-toggle="tooltip">
-                                <span class="fa fa-check" aria-hidden="true"></span>
-                            </button>
-                        </div>
                         <div class="editor-menu-group">
                             <button
                                 type="button"
@@ -67,10 +54,17 @@
 
         <!-- Verovio Notation Panel -->
         <div class="editor-panel mei-notation-panel">
-            <div class="panel-header">
-                <h6>Music Notation</h6>
-            </div>
-            <div class="panel-body">
+            <button
+                type="button"
+                class="btn panel-header"
+                data-bs-toggle="collapse"
+                data-bs-target="#verovioPanel"
+                aria-expanded="true"
+                aria-controls="verovioPanel">
+                <span class="fa fa-music" aria-hidden="true"></span>
+                <h6>Verovio</h6>
+            </button>
+            <div id="verovioPanel" class="panel-body collapse show">
                 <mei:verovio
                     content="#{content}" />
             </div>

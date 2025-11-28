@@ -51,22 +51,17 @@ class MEIEditor {
         // Initialize our own CodeMirror instance
         try {
             this.createCodeMirrorInstance();
-            updateStatus(this.editorId, 'CodeMirror initialized');
         } catch (error) {
             console.error('CodeMirror initialization failed:', error);
-            updateStatus(this.editorId, 'CodeMirror initialization failed', 'error');
         }
 
         // Just verify that Verovio is available globally - don't initialize it
         if (!window.app) {
             console.error('Verovio app not available on window.app');
-            updateStatus(this.editorId, 'Verovio not available', 'error');
-        } else {
-            updateStatus(this.editorId, 'MEI Editor ready');
         }
 
         this.setupSynchronization();
-        this.connectControls();
+        this.setupCollapseListeners();
     }
 
     createCodeMirrorInstance() {
@@ -110,7 +105,6 @@ class MEIEditor {
             this.autoUpdate = autoUpdateCheckbox.checked;
             autoUpdateCheckbox.addEventListener('change', (e) => {
                 this.autoUpdate = e.target.checked;
-                updateStatus(this.editorId, this.autoUpdate ? 'Auto-update enabled' : 'Auto-update disabled');
             });
         }
 
@@ -142,7 +136,6 @@ class MEIEditor {
         // Check if global Verovio app is available
         if (!window.app) {
             console.error('Verovio app not available on window.app');
-            updateStatus(this.editorId, 'Verovio not available', 'error');
             return;
         }
 
@@ -162,7 +155,6 @@ class MEIEditor {
                 const parseError = doc.querySelector('parsererror');
                 if (parseError) {
                     console.warn('Invalid XML detected, skipping Verovio update:', parseError.textContent);
-                    updateStatus(this.editorId, 'Invalid XML - notation not updated', 'error');
                     return;
                 }
             } catch (xmlError) {
@@ -190,107 +182,30 @@ class MEIEditor {
                 }
             }
 
-            updateStatus(this.editorId, 'Notation updated');
         } catch (error) {
             console.error('Error syncing to Verovio:', error);
-            updateStatus(this.editorId, 'Update failed: ' + error.message, 'error');
         }
     }
 
-    connectControls() {
-        // Format XML button
-        const formatButton = document.getElementById(this.editorId + 'FormatButton');
-        if (formatButton) {
-            formatButton.addEventListener('click', () => {
-                this.formatXML();
-            });
+    setupCollapseListeners() {
+        // Find the CodeMirror panel body
+        const codePanel = this.container.querySelector('.mei-code-panel .panel-body');
+
+        if (!codePanel) {
+            console.warn('MEI Editor: Could not find code panel for collapse listener');
+            return;
         }
 
-        // Validate XML button
-        const validateButton = document.getElementById(this.editorId + 'ValidateButton');
-        if (validateButton) {
-            validateButton.addEventListener('click', () => {
-                this.validateXML();
-            });
-        }
-    }
-
-    formatXML() {
-        try {
-            let content;
-            if (this.codeMirrorInstance && this.codeMirrorInstance.state) {
-                content = this.codeMirrorInstance.state.doc.toString();
-            } else {
-                content = this.referenceInput.value;
-            }
-
-            // Simple XML formatting (you might want to use a proper XML formatter)
-            const formatted = this.simpleXMLFormat(content);
-
-            if (this.codeMirrorInstance && this.codeMirrorInstance.dispatch) {
-                // CodeMirror 6 style
-                this.codeMirrorInstance.dispatch({
-                    changes: {
-                        from: 0,
-                        to: this.codeMirrorInstance.state.doc.length,
-                        insert: formatted
-                    }
-                });
-            } else {
-                this.referenceInput.value = formatted;
-            }
-
-            updateStatus(this.editorId, 'XML formatted');
-        } catch (error) {
-            updateStatus(this.editorId, 'Error formatting XML', 'error');
-        }
-    }
-
-    validateXML() {
-        try {
-            let content;
-            if (this.codeMirrorInstance && this.codeMirrorInstance.state) {
-                content = this.codeMirrorInstance.state.doc.toString();
-            } else {
-                content = this.referenceInput.value;
-            }
-
-            // Basic XML validation
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(content, 'application/xml');
-            const parseError = doc.querySelector('parsererror');
-
-            if (parseError) {
-                updateStatus(this.editorId, 'XML validation failed: ' + parseError.textContent, 'error');
-            } else {
-                updateStatus(this.editorId, 'XML is valid', 'success');
-            }
-        } catch (error) {
-            updateStatus(this.editorId, 'Error validating XML', 'error');
-        }
-    }
-
-    simpleXMLFormat(xml) {
-        // Simple XML formatting - you might want to use a proper library
-        let formatted = '';
-        let indent = 0;
-        const tab = '  ';
-
-        xml.split(/>\s*</).forEach((node, index) => {
-            if (index > 0) formatted += '<';
-            if (index < xml.split(/>\s*</).length - 1) node += '>';
-
-            const isClosingTag = node.charAt(0) === '/';
-            const isSelfClosing = node.charAt(node.length - 2) === '/';
-
-            if (isClosingTag) indent--;
-
-            formatted += tab.repeat(Math.max(0, indent)) + node + '\n';
-
-            if (!isClosingTag && !isSelfClosing) indent++;
+        // Listen for Bootstrap collapse events
+        codePanel.addEventListener('hidden.bs.collapse', () => {
+            // CodeMirror is now collapsed, add class to container
+            this.container.classList.add('code-collapsed');
         });
 
-        return formatted.trim();
+        codePanel.addEventListener('shown.bs.collapse', () => {
+            // CodeMirror is now shown, remove class from container
+            this.container.classList.remove('code-collapsed');
+        });
     }
 }
 
@@ -301,17 +216,3 @@ document.addEventListener('DOMContentLoaded', () => {
     const instance = new MEIEditor(container, editorId);
     instance.initialize();
 });
-
-function updateStatus(editorId, message, type = 'info') {
-    const statusText = document.getElementById(editorId + 'StatusText');
-    if (statusText) {
-        statusText.textContent = message;
-        statusText.className = 'status-text';
-        if (type === 'error') {
-            statusText.classList.add('text-danger');
-        } else if (type === 'success') {
-            statusText.classList.add('text-success');
-        }
-    }
-    console.log(`[${editorId}] ${type.toUpperCase()}: ${message}`);
-}
