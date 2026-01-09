@@ -1,72 +1,87 @@
 ---
-title: ZZZ
-identifier: intranda_step_ZZZ
-description: Step Plugin for ZZZ
+title: MEI Editor
+identifier: intranda_step_mei_editor
+description: Step plugin for editing MEI XML in the web interface
 published: false
 keywords:
     - Goobi workflow
     - Plugin
     - Step Plugin
+    - MEI
 ---
 
 ## Introduction
-This documentation explains the plugin for ZZZ.
+
+This plugin enables the editing of MEI XML in the web interface and the simultaneous display of the XML in Verovio.
 
 ## Installation
-To be able to use the plugin, the following files must be installed:
+
+To use the plugin, the following files must be installed:
 
 ```bash
-/opt/digiverso/goobi/plugins/step/plugin-step-ZZZ-base.jar
-/opt/digiverso/goobi/plugins/GUI/plugin-step-ZZZ-gui.jar
-/opt/digiverso/goobi/config/plugin_intranda_step_ZZZ.xml
+/opt/digiverso/goobi/plugins/step/plugin-step-mei-editor-base.jar
+/opt/digiverso/goobi/plugins/GUI/plugin-step-mei-editor-gui.jar
+/opt/digiverso/goobi/config/plugin_intranda_step_mei_editor.xml
 ```
 
-Once the plugin has been installed, it can be selected within the workflow for the respective work steps and thus executed automatically. A workflow could look like the following example:
+Once the plugin has been installed, it can be selected within the workflow for the respective work steps and thus executed automatically. As shown in the following screenshot, this is done by selecting the plugin `intranda_step_mei_editor` from the list of installed plugins:
 
-![Example of a workflow structure](screen1_en.png)
-
-To use the plugin, it must be selected in a workflow step:
-
-![Configuration of the workflow step for using the plugin](screen2_en.png)
-
+![Example workflow structure](screen1_en.png)
 
 ## Overview and functionality
-ZZZ
 
+When the plugin is launched, the MEI XML file found for the respective process is loaded and loaded into a Codemirror instance. Below this is the Verovio render of the current MEI XML. This display automatically incorporates valid changes in the MEI XML.
+
+Verovio offers the option of downloading the MEI-XML as MIDI or MEI. In addition, the piece displayed can also be played as MIDI.
+
+The image display on the left can show either a single image or a configurable preview image display.
+
+The changes can be applied by clicking the "Save" button. "Save results and complete task" saves the current version of the MEI-XML and completes the task.
 
 ## Configuration
+
 The plugin is configured in the file `plugin_intranda_step_ZZZ.xml` as shown here:
 
-{{CONFIG_CONTENT}}
+```xml
+<config_plugin>
 
-{{CONFIG_DESCRIPTION_PROJECT_STEP}}
+    <config>
+        <!-- which projects to use for (can be more than one, otherwise use *) -->
+        <project>*</project>
+        <step>*</step>
+
+        <!-- display button to finish the task directly from within the entered plugin -->
+        <allowTaskFinishButtons>true</allowTaskFinishButtons>
+
+        <!-- Image display options -->
+        <!-- Default thumbnail size in px -->
+        <thumbnailSize>200</thumbnailSize>
+
+        <!-- Available thumbnail sizes for dropdown (optional) -->
+        <!-- If not specified, defaults to: 100, 200, 300, 400 -->
+        <thumbnailSizes>100</thumbnailSizes>
+        <thumbnailSizes>150</thumbnailSizes>
+        <thumbnailSizes>200</thumbnailSizes>
+        <thumbnailSizes>300</thumbnailSizes>
+        <thumbnailSizes>400</thumbnailSizes>
+
+    </config>
+
+</config_plugin>
+```
+
+The parameters within this configuration file have the following meanings:
 
 Parameter               | Explanation
 ------------------------|------------------------------------
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
-``                      | 
+| `project` | This parameter specifies the project to which the current `<config>` block should apply. The name of the project is used here.|
+| `step` | This parameter controls the work steps to which the `<config>` block should apply. The name of the work step is used here. |
+`allowTaskFinishButtons` | This parameter specifies whether the "Save and finish task" button should be displayed.
+`thumbnailSize` | This parameter specifies the original size of the thumbnails displayed (in pixels).
+`thumbnailSizes` | This parameter specifies which thumbnail sizes should be available for selection. This parameter can occur multiple times in the `<config>` block.
+
+In addition to the plugin configuration, the following parameter must be added to `goobi_config.properties`:
+
+```
+process.folder.ocr.mei={processtitle}_mei
+```
