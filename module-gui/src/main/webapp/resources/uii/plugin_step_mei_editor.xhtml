@@ -104,10 +104,10 @@
             </section:header>
             <section:body padding="true">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col">
                         <h:form
                             id="imageForm"
-                            styleClass="d-flex flex-column gap-3">
+                            styleClass="d-flex flex-column gap-3 h-100">
                             <!-- View Mode Toggle -->
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div
@@ -157,19 +157,20 @@
                             <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.imageView}">
                                 <!-- Main Image Display -->
                                 <div
-                                    class="text-center"
-                                    style="height: 80vh; overflow: auto;">
-                                    <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage != null}">
-                                        <canvas
-                                            class="thumb-canvas"
-                                            data-image_small="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
-                                            data-image_large="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
-                                            title="#{AktuelleSchritteForm.myPlugin.currentImage.imageName}"
-                                            id="mainImage"></canvas>
-                                        <div class="mt-2">
-                                            <small class="text-muted">#{AktuelleSchritteForm.myPlugin.currentImage.imageName}</small>
-                                        </div>
-                                    </h:panelGroup>
+                                    class="flex-grow-1 d-flex flex-column align-items-center justify-content-around">
+                                    <div>
+                                        <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage != null}">
+                                            <canvas
+                                                class="thumb-canvas"
+                                                data-image_small="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
+                                                data-image_large="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
+                                                title="#{AktuelleSchritteForm.myPlugin.currentImage.imageName}"
+                                                id="mainImage"></canvas>
+                                            <div class="mt-2 text-center">
+                                                <small class="text-muted">#{AktuelleSchritteForm.myPlugin.currentImage.imageName}</small>
+                                            </div>
+                                        </h:panelGroup>
+                                    </div>
                                     <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage == null}">
                                         <div class="alert alert-info mt-5">#{msgs.noImagesFound}</div>
                                     </h:panelGroup>
