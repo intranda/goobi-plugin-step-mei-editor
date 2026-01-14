@@ -198,7 +198,7 @@ public class MeiEditorStepPlugin implements IStepPluginVersion2 {
 
     public void saveContent() {
         try (OutputStream os = StorageProvider.getInstance().newOutputStream(meiFile);
-                BufferedWriter outwriter = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
+            BufferedWriter outwriter = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8))) {
             outwriter.write(meiContent);
         } catch (IOException e) {
             log.error(e);

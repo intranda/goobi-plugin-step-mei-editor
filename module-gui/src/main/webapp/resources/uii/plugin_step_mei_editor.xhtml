@@ -291,41 +291,35 @@
                         <h:form id="meiForm" styleClass="d-flex flex-column h-100 justify-content-between">
                             <mei:editor
                                 content="#{AktuelleSchritteForm.myPlugin.meiContent}" />
-                            <button:row styleClass="p-3">
-                                <!-- Save -->
-                                <button
-                                    jsf:id="absenden"
-                                    class="btn btn-blank ms-auto"
-                                    jsf:action="#{AktuelleSchritteForm.myPlugin.saveContent}"
-                                    type="button">
-                                    <span
-                                        aria-hidden="true"
-                                        class="fa fa-save" />
-                                    <span>
-                                        <h:outputText value="#{msgs.speichern}" />
-                                    </span>
-                                    <f:setPropertyActionListener
-                                        target="#{NavigationForm.uiStatus.pluginSimulation}"
-                                        value="#{false}" />
-                                    <f:ajax execute="@form @this" render="@none" />
-                                </button>
-                                <button
-                                    class="btn btn-success"
-                                    jsf:id="finishAndClose"
-                                    type="submit"
-                                    jsf:rendered="#{NavigationForm.uiStatus.pluginSimulation != true and AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
-                                    jsf:action="#{AktuelleSchritteForm.SchrittDurchBenutzerAbschliessen}">
-                                    <span
-                                        aria-hidden="true"
-                                        class="fa fa-check" />
-                                    <span>
-                                        <h:outputText value="#{msgs.task_leavePluginAndFinishTask}" />
-                                    </span>
-                                    <f:setPropertyActionListener
-                                        target="#{NavigationForm.uiStatus.pluginSimulation}"
-                                        value="#{false}" />
-                                </button>
-                            </button:row>
+                                <button:row styleClass="my-3">
+                                    <!-- Save -->
+                                    <button
+                                        jsf:id="save"
+                                        class="btn btn-blank ms-auto"
+                                        jsf:action="#{AktuelleSchritteForm.myPlugin.saveContent}"
+                                        type="submit">
+                                        <span
+                                            aria-hidden="true"
+                                            class="fa fa-save" />
+                                        <span>
+                                            <h:outputText value="#{msgs.speichern}" />
+                                        </span>
+                                        <!-- <f:ajax execute=":meiEditorSection:meiForm:meiInput @this" render="@none" /> -->
+                                    </button>
+                                    <button
+                                        class="btn btn-success"
+                                        jsf:id="finishAndClose"
+                                        type="submit"
+                                        jsf:rendered="#{NavigationForm.uiStatus.pluginSimulation != true and AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
+                                        jsf:action="#{AktuelleSchritteForm.SchrittDurchBenutzerAbschliessen}">
+                                        <span
+                                            aria-hidden="true"
+                                            class="fa fa-check" />
+                                        <span>
+                                            <h:outputText value="#{msgs.task_leavePluginAndFinishTask}" />
+                                        </span>
+                                    </button>
+                                </button:row>
                         </h:form>
                     </div>
                 </div>
