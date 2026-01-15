@@ -80,8 +80,19 @@ Parameter               | Explanation
 `thumbnailSize` | This parameter specifies the original size of the thumbnails displayed (in pixels).
 `thumbnailSizes` | This parameter specifies which thumbnail sizes should be available for selection. This parameter can occur multiple times in the `<config>` block.
 
-In addition to the plugin configuration, the following parameter must be added to `goobi_config.properties`:
+In addition to the plugin configuration, the path to the directory of the MEI-XML must be added to `goobi_config.properties`:
 
+```properties
+process.folder.misc.mei={processtitle}_mei
 ```
-process.folder.ocr.mei={processtitle}_mei
+
+When using the MEI export plugin, this path has to match the configured source path of that plugin.
+
+When the plugin does not save changes correctly, and neither client nor server return any errors, the problem may be that the submitted XML file is too large and being rejected silently by Tomcat. In this case, add the attribute `maxPostSize` to the relevant Connector in the `server.xml` (usually the one for port `8080`). The value must either be sufficiently large for the submitted files, or can be set to `-1` to allow Tomcat to handle requests of any size.
+
+```xml=server.xml
+<Connector
+    port="8080"
+    protocol="HTTP/1.1"
+    maxPostSize="-1" />
 ```
