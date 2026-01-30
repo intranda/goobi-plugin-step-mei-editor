@@ -9,6 +9,11 @@
         overflow: hidden;
     }
 
+    &.code-collapsed .mei-code-panel {
+        flex: 1 1 auto;
+        min-height: 0;
+    }
+
     &-panel {
         display: flex;
         flex-direction: column;
@@ -50,11 +55,6 @@
         &.mei-code-panel {
             flex: 1 1 50%;
             min-height: 50%;
-
-            .panel-body.collapse:not(.show) {
-                flex: 0 0 0;
-                min-height: 0;
-            }
         }
 
         &.mei-notation-panel {

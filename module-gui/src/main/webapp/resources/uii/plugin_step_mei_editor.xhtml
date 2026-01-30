@@ -49,7 +49,7 @@
     </ui:define>
 
     <ui:define name="content">
-        <section:section type="action">
+        <section:section type="action" id="meiEditorSection">
             <section:header
                 icon="puzzle-piece"
                 title="#{msgs.plugin}: #{msgs[('plugin_').concat(AktuelleSchritteForm.myPlugin.title)]}">
@@ -104,10 +104,10 @@
             </section:header>
             <section:body padding="true">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col">
                         <h:form
                             id="imageForm"
-                            styleClass="d-flex flex-column gap-3">
+                            styleClass="d-flex flex-column gap-3 h-100">
                             <!-- View Mode Toggle -->
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div
@@ -157,19 +157,20 @@
                             <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.imageView}">
                                 <!-- Main Image Display -->
                                 <div
-                                    class="text-center"
-                                    style="height: 80vh; overflow: auto;">
-                                    <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage != null}">
-                                        <canvas
-                                            class="thumb-canvas"
-                                            data-image_small="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
-                                            data-image_large="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
-                                            title="#{AktuelleSchritteForm.myPlugin.currentImage.imageName}"
-                                            id="mainImage"></canvas>
-                                        <div class="mt-2">
-                                            <small class="text-muted">#{AktuelleSchritteForm.myPlugin.currentImage.imageName}</small>
-                                        </div>
-                                    </h:panelGroup>
+                                    class="flex-grow-1 d-flex flex-column align-items-center justify-content-around">
+                                    <div>
+                                        <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage != null}">
+                                            <canvas
+                                                class="thumb-canvas"
+                                                data-image_small="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
+                                                data-image_large="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
+                                                title="#{AktuelleSchritteForm.myPlugin.currentImage.imageName}"
+                                                id="mainImage"></canvas>
+                                            <div class="mt-2 text-center">
+                                                <small class="text-muted">#{AktuelleSchritteForm.myPlugin.currentImage.imageName}</small>
+                                            </div>
+                                        </h:panelGroup>
+                                    </div>
                                     <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage == null}">
                                         <div class="alert alert-info mt-5">#{msgs.noImagesFound}</div>
                                     </h:panelGroup>
@@ -287,49 +288,38 @@
                         </h:form>
                     </div>
                     <div class="col">
-                        <h:form id="meiForm">
+                        <h:form id="meiForm" styleClass="d-flex flex-column h-100 justify-content-between">
                             <mei:editor
                                 content="#{AktuelleSchritteForm.myPlugin.meiContent}" />
-                        </h:form>
-                        <h:form
-                            id="footerForm"
-                            styleClass="p-3">
-                            <button:row>
-                                <!-- Save -->
-                                <button
-                                    jsf:id="absenden"
-                                    class="btn btn-blank"
-                                    form="meiForm"
-                                    jsf:action="#{AktuelleSchritteForm.myPlugin.saveContent}">
-                                    <span
-                                        aria-hidden="true"
-                                        class="fa fa-save" />
-                                    <span>
-                                        <h:outputText value="#{msgs.speichern}" />
-                                    </span>
-                                    <f:setPropertyActionListener
-                                        target="#{NavigationForm.uiStatus.pluginSimulation}"
-                                        value="#{false}" />
-                                    <f:ajax execute="meiForm" render="@none" />
-                                </button>
-                                <button
-                                    class="btn btn-success"
-                                    jsf:id="finishAndClose"
-                                    type="submit"
-                                    form="meiForm"
-                                    jsf:rendered="#{NavigationForm.uiStatus.pluginSimulation != true and AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
-                                    jsf:action="#{AktuelleSchritteForm.SchrittDurchBenutzerAbschliessen}">
-                                    <span
-                                        aria-hidden="true"
-                                        class="fa fa-check" />
-                                    <span>
-                                        <h:outputText value="#{msgs.task_leavePluginAndFinishTask}" />
-                                    </span>
-                                    <f:setPropertyActionListener
-                                        target="#{NavigationForm.uiStatus.pluginSimulation}"
-                                        value="#{false}" />
-                                </button>
-                            </button:row>
+                                <button:row styleClass="my-3">
+                                    <!-- Save -->
+                                    <button
+                                        jsf:id="save"
+                                        class="btn btn-blank ms-auto"
+                                        jsf:action="#{AktuelleSchritteForm.myPlugin.saveContent}"
+                                        type="submit">
+                                        <span
+                                            aria-hidden="true"
+                                            class="fa fa-save" />
+                                        <span>
+                                            <h:outputText value="#{msgs.speichern}" />
+                                        </span>
+                                        <f:ajax execute=":meiEditorSection:meiForm:meiInput @this" render="@none" />
+                                    </button>
+                                    <button
+                                        class="btn btn-success"
+                                        jsf:id="finishAndClose"
+                                        type="submit"
+                                        jsf:rendered="#{NavigationForm.uiStatus.pluginSimulation != true and AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
+                                        jsf:action="#{AktuelleSchritteForm.SchrittDurchBenutzerAbschliessen}">
+                                        <span
+                                            aria-hidden="true"
+                                            class="fa fa-check" />
+                                        <span>
+                                            <h:outputText value="#{msgs.task_leavePluginAndFinishTask}" />
+                                        </span>
+                                    </button>
+                                </button:row>
                         </h:form>
                     </div>
                 </div>
