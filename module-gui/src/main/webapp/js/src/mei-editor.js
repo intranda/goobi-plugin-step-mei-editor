@@ -35,18 +35,7 @@ class MEIEditor {
         }
 
         // Initialize content
-        if (!this.referenceInput.value.trim()) {
-            console.warn('MEI Editor: No content found in reference input');
-            return;
-        } else {
-            try {
-                const decodedContent = this.referenceInput.value;
-                this.verovioInput.value = decodedContent;
-            } catch (e) {
-                console.error('MEI Editor: Failed to decode reference input content');
-                return;
-            }
-        }
+        this.verovioInput.value = this.referenceInput.value;
 
         // Initialize our own CodeMirror instance
         try {
