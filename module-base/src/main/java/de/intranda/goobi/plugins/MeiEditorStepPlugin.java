@@ -142,7 +142,7 @@ public class MeiEditorStepPlugin implements IStepPluginVersion2 {
         process = step.getProzess();
 
         try {
-            String meiFolder = process.getConfiguredImageFolder("ocr.mei");
+            String meiFolder = process.getConfiguredImageFolder("misc.mei");
             // required folder is not configured, abort
             if (StringUtils.isBlank(meiFolder)) {
                 Helper.setFehlerMeldung("Abort, MEI folder is not set");
