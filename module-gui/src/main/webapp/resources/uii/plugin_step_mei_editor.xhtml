@@ -49,282 +49,278 @@
     </ui:define>
 
     <ui:define name="content">
-        <section:section type="action" id="meiEditorSection">
-            <section:header
-                icon="puzzle-piece"
-                title="#{msgs.plugin}: #{msgs[('plugin_').concat(AktuelleSchritteForm.myPlugin.title)]}">
-                <h:form id="headerForm">
-                    <div class="actions d-flex">
-                        <button
-                            jsf:id="id10"
-                            class="btn d-flex align-items-center btn--title-action"
-                            jsf:rel="tooltip"
-                            jsf:action="#{NavigationForm.Reload}"
-                            title="#{msgs.reload}"
-                            rel="tooltip"
-                            data-bs-toggle="tooltip">
-                            <span
-                                aria-hidden="true"
-                                class="fa fa-refresh" />
-                        </button>
-                        <button
-                            jsf:rendered="#{NavigationForm.uiStatus.pluginSimulation != true and AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
-                            title="#{msgs.task_leavePluginAndFinishTask}"
-                            jsf:id="id11"
-                            class="btn d-flex align-items-center btn--title-action"
-                            jsf:rel="tooltip"
-                            jsf:action="#{AktuelleSchritteForm.SchrittDurchBenutzerAbschliessen}"
-                            rel="tooltip"
-                            data-bs-toggle="tooltip">
-                            <span
-                                aria-hidden="true"
-                                class="fa fa-check" />
-                            <f:setPropertyActionListener
-                                target="#{NavigationForm.uiStatus.pluginSimulation}"
-                                value="#{false}" />
-                        </button>
-                        <button
-                            jsf:id="id12"
-                            class="btn d-flex align-items-center btn--title-action"
-                            jsf:rel="tooltip"
-                            jsf:action="#{AktuelleSchritteForm.myPlugin.cancel}"
-                            jsf:rendered="#{NavigationForm.uiStatus.pluginSimulation != true and AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
-                            title="#{msgs.pluginLeave}"
-                            data-bs-toggle="tooltip"
-                            rel="tooltip">
-                            <span
-                                aria-hidden="true"
-                                class="fa fa-close" />
-                            <f:setPropertyActionListener
-                                target="#{NavigationForm.uiStatus.pluginSimulation}"
-                                value="#{false}" />
-                        </button>
-                    </div>
-                </h:form>
-            </section:header>
-            <section:body padding="true">
-                <div class="row">
-                    <div class="col">
-                        <h:form
-                            id="imageForm"
-                            styleClass="d-flex flex-column gap-3 h-100">
-                            <!-- View Mode Toggle -->
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div
-                                    class="btn-group"
-                                    role="group">
-                                    <button
-                                        jsf:action="#{AktuelleSchritteForm.myPlugin.setViewMode('image')}"
-                                        class="btn btn-#{AktuelleSchritteForm.myPlugin.imageView ? 'primary' : 'outline-primary'}">
-                                        <span class="visually-hidden">#{msgs.mets_showImagesOne}</span>
-                                        <span
-                                            class="fa fa-picture-o"
-                                            aria-hidden="true" />
-                                        <f:ajax render="@form" />
-                                    </button>
-                                    <button
-                                        jsf:action="#{AktuelleSchritteForm.myPlugin.setViewMode('thumbnail')}"
-                                        class="btn btn-#{AktuelleSchritteForm.myPlugin.thumbnailView ? 'primary' : 'outline-primary'}">
-                                        <span class="visually-hidden">#{msgs.mets_showImagesThumbs}</span>
-                                        <span
-                                            class="fa fa-th"
-                                            aria-hidden="true" />
-                                        <f:ajax render="@form" />
-                                    </button>
-                                </div>
-                                <!-- Thumbnail Size Selector -->
-                                <h:panelGroup
-                                    rendered="#{AktuelleSchritteForm.myPlugin.thumbnailView}"
-                                    layout="block"
-                                    styleClass="d-flex align-items-center gap-2">
-                                    <h:outputLabel
-                                        for="thumbnailSizeSelect"
-                                        value="#{msgs.thumbnailSize}:"
-                                        styleClass="mb-0 text-muted small" />
-                                    <h:selectOneMenu
-                                        id="thumbnailSizeSelect"
-                                        value="#{AktuelleSchritteForm.myPlugin.thumbnailSize}"
-                                        styleClass="form-select form-select-sm"
-                                        style="width: auto;">
-                                        <f:selectItems value="#{AktuelleSchritteForm.myPlugin.thumbnailSizeOptions}" />
-                                        <f:ajax listener="#{AktuelleSchritteForm.myPlugin.changeThumbnailSize}" render="@form" />
-                                    </h:selectOneMenu>
-                                    <span class="text-muted small">px</span>
-                                </h:panelGroup>
-                            </div>
-
-                            <!-- IMAGE VIEW MODE -->
-                            <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.imageView}">
-                                <!-- Main Image Display -->
-                                <div
-                                    class="flex-grow-1 d-flex flex-column align-items-center justify-content-around">
-                                    <div>
-                                        <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage != null}">
-                                            <canvas
-                                                class="thumb-canvas"
-                                                data-image_small="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
-                                                data-image_large="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
-                                                title="#{AktuelleSchritteForm.myPlugin.currentImage.imageName}"
-                                                id="mainImage"></canvas>
-                                            <div class="mt-2 text-center">
-                                                <small class="text-muted">#{AktuelleSchritteForm.myPlugin.currentImage.imageName}</small>
-                                            </div>
-                                        </h:panelGroup>
+        <div class="mei-plugin">
+            <section:section type="action" id="meiEditorSection">
+                <section:header
+                    icon="puzzle-piece"
+                    title="#{msgs.plugin}: #{msgs[('plugin_').concat(AktuelleSchritteForm.myPlugin.title)]}">
+                    <h:form id="headerForm">
+                        <div class="actions d-flex">
+                            <button
+                                jsf:id="id10"
+                                class="btn d-flex align-items-center btn--title-action"
+                                jsf:rel="tooltip"
+                                jsf:action="#{NavigationForm.Reload}"
+                                title="#{msgs.reload}"
+                                rel="tooltip"
+                                data-bs-toggle="tooltip">
+                                <span
+                                    aria-hidden="true"
+                                    class="fa fa-refresh" />
+                            </button>
+                            <button
+                                jsf:rendered="#{AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
+                                title="#{msgs.task_leavePluginAndFinishTask}"
+                                jsf:id="id11"
+                                class="btn d-flex align-items-center btn--title-action"
+                                jsf:rel="tooltip"
+                                jsf:action="#{AktuelleSchritteForm.SchrittDurchBenutzerAbschliessen}"
+                                rel="tooltip"
+                                data-bs-toggle="tooltip">
+                                <span
+                                    aria-hidden="true"
+                                    class="fa fa-check" />
+                            </button>
+                            <button
+                                jsf:id="id12"
+                                class="btn d-flex align-items-center btn--title-action"
+                                jsf:rel="tooltip"
+                                jsf:action="#{AktuelleSchritteForm.myPlugin.cancel}"
+                                jsf:rendered="#{AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
+                                title="#{msgs.pluginLeave}"
+                                data-bs-toggle="tooltip"
+                                rel="tooltip">
+                                <span
+                                    aria-hidden="true"
+                                    class="fa fa-close" />
+                            </button>
+                        </div>
+                    </h:form>
+                </section:header>
+                <section:body padding="true">
+                    <div class="row">
+                        <div class="col">
+                            <h:form
+                                id="imageForm"
+                                styleClass="d-flex flex-column gap-3 h-100">
+                                <!-- View Mode Toggle -->
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div
+                                        class="btn-group"
+                                        role="group">
+                                        <button
+                                            jsf:action="#{AktuelleSchritteForm.myPlugin.setViewMode('image')}"
+                                            class="btn btn-#{AktuelleSchritteForm.myPlugin.imageView ? 'primary-400' : 'outline-primary-400'}">
+                                            <span class="visually-hidden">#{msgs.mets_showImagesOne}</span>
+                                            <span
+                                                class="fa fa-picture-o"
+                                                aria-hidden="true" />
+                                            <f:ajax render="@form" />
+                                        </button>
+                                        <button
+                                            jsf:action="#{AktuelleSchritteForm.myPlugin.setViewMode('thumbnail')}"
+                                            class="btn btn-#{AktuelleSchritteForm.myPlugin.thumbnailView ? 'primary-400' : 'outline-primary-400'}">
+                                            <span class="visually-hidden">#{msgs.mets_showImagesThumbs}</span>
+                                            <span
+                                                class="fa fa-th"
+                                                aria-hidden="true" />
+                                            <f:ajax render="@form" />
+                                        </button>
                                     </div>
-                                    <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage == null}">
-                                        <div class="alert alert-info mt-5">#{msgs.noImagesFound}</div>
+                                    <!-- Thumbnail Size Selector -->
+                                    <h:panelGroup
+                                        rendered="#{AktuelleSchritteForm.myPlugin.thumbnailView}"
+                                        layout="block"
+                                        styleClass="d-flex align-items-center gap-2">
+                                        <h:outputLabel
+                                            for="thumbnailSizeSelect"
+                                            value="#{msgs.thumbnailSize}:"
+                                            styleClass="mb-0 text-muted small" />
+                                        <h:selectOneMenu
+                                            id="thumbnailSizeSelect"
+                                            value="#{AktuelleSchritteForm.myPlugin.thumbnailSize}"
+                                            styleClass="form-select form-select-sm"
+                                            style="width: auto;">
+                                            <f:selectItems value="#{AktuelleSchritteForm.myPlugin.thumbnailSizeOptions}" />
+                                            <f:ajax listener="#{AktuelleSchritteForm.myPlugin.changeThumbnailSize}" render="@form" />
+                                        </h:selectOneMenu>
+                                        <span class="text-muted small">px</span>
                                     </h:panelGroup>
                                 </div>
-                                <!-- Paginator -->
-                                <div class="dataTables__paginator mx-auto">
-                                    <!-- First -->
-                                    <button
-                                        class="btn btn-blank"
-                                        aria-label="#{msgs.firstPage}"
-                                        jsf:action="#{AktuelleSchritteForm.myPlugin.firstImage}"
-                                        jsf:disabled="#{AktuelleSchritteForm.myPlugin.currentImageIndex == 0}"
-                                        jsf:id="navfirst">
-                                        <span class="fa fa-angle-double-left" />
-                                        <f:ajax render="@form" />
-                                    </button>
 
-                                    <!-- Previous -->
-                                    <button
-                                        class="btn btn-primary-400"
-                                        jsf:action="#{AktuelleSchritteForm.myPlugin.previousImage}"
-                                        jsf:disabled="#{AktuelleSchritteForm.myPlugin.currentImageIndex == 0}"
-                                        jsf:id="navprev">
-                                        <span class="fa fa-angle-left" />
-                                        <h:outputText value=" #{msgs.previousImage}" />
-                                        <f:ajax render="@form" />
-                                    </button>
-
-                                    <!-- Page info and jump -->
-                                    <div class="dataTables__paginator__page-count">
-                                        <button
-                                            type="button"
-                                            class="btn btn-link text-black"
-                                            id="txtMoveTo1"
-                                            onclick="document.querySelector('[id$=txtMoveTo2]').style.display='inline';
-                                                    document.querySelector('[id$=txtMoveTo1]').style.display='none';
-                                                    document.querySelector('[id$=txtMoveTo2]').focus();
-                                                    document.querySelector('[id$=txtMoveTo2]').select();">
-                                            #{msgs.seite} #{AktuelleSchritteForm.myPlugin.currentPageNumber} #{msgs.von}
-                                            #{AktuelleSchritteForm.myPlugin.imageCount}</button>
-
-                                        <h:inputText
-                                            id="txtMoveTo2"
-                                            forceId="false"
-                                            value="#{AktuelleSchritteForm.myPlugin.pageJumpInput}"
-                                            style="display:none;width:30px"
-                                            required="true"
-                                            onblur="document.querySelector('[id$=txtMoveTo2]').style.display='none';document.querySelector('[id$=txtMoveTo1]').style.display='inline';"
-                                            onkeypress="return submitEnter(document.querySelector('[id$=cmdMoveTo]').id,event)" />
-                                        <h:commandButton
-                                            action="#{AktuelleSchritteForm.myPlugin.jumpToPage}"
-                                            id="cmdMoveTo"
-                                            forceId="false"
-                                            value="go"
-                                            style="display:none">
-                                        </h:commandButton>
-                                    </div>
-
-                                    <!-- Next -->
-                                    <button
-                                        class="btn btn-primary-400"
-                                        jsf:action="#{AktuelleSchritteForm.myPlugin.nextImage}"
-                                        jsf:disabled="#{AktuelleSchritteForm.myPlugin.currentImageIndex >= AktuelleSchritteForm.myPlugin.imageCount - 1}"
-                                        jsf:id="navnext">
-                                        <h:outputText value="#{msgs.nextImage} " />
-                                        <span class="fa fa-angle-right" />
-                                        <f:ajax render="@form" />
-                                    </button>
-
-                                    <!-- Last -->
-                                    <button
-                                        class="btn btn-blank"
-                                        aria-label="#{msgs.lastImage}"
-                                        jsf:action="#{AktuelleSchritteForm.myPlugin.lastImage}"
-                                        jsf:disabled="#{AktuelleSchritteForm.myPlugin.currentImageIndex >= AktuelleSchritteForm.myPlugin.imageCount - 1}"
-                                        jsf:id="navlast">
-                                        <span class="fa fa-angle-double-right" />
-                                        <f:ajax render="@form" />
-                                    </button>
-                                </div>
-                            </h:panelGroup>
-
-                            <!-- THUMBNAIL VIEW MODE -->
-                            <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.thumbnailView}">
-                                <div id="thumbnailsContainer" class="overflow-y-auto" style="height: 80vh;">
-                                    <div class="thumbnails" style="&#45;&#45;thumb-size: #{AktuelleSchritteForm.myPlugin.thumbnailSize + 50}px;">
-                                        <ui:repeat value="#{AktuelleSchritteForm.myPlugin.imageList}" var="image" varStatus="status">
-                                            <div class="thumbnails__thumb #{AktuelleSchritteForm.myPlugin.currentImageIndex eq status.index ? 'active' : ''}">
-                                                <div class="thumbnails__thumb-image">
-                                                    <h:commandLink
-                                                        action="#{AktuelleSchritteForm.myPlugin.selectImage(status.index)}"
-                                                        styleClass="btn">
-                                                        <canvas
-                                                            class="thumb-canvas"
-                                                            data-image_small="#{image.thumbnailUrl}"
-                                                            data-image_large="#{image.largeThumbnailUrl}"
-                                                            title="#{image.tooltip}"
-                                                            id="thumb_full_#{status.index}"
-                                                            style="width: 100%; height: auto;"></canvas>
-                                                        <div class="mt-1 text-center">
-                                                            <small class="d-block text-truncate fw-bold">
-                                                                #{status.index + 1}
-                                                            </small>
-                                                            <small class="d-block text-truncate text-muted" style="font-size: 0.65rem;">
-                                                                #{image.imageName}
-                                                            </small>
-                                                        </div>
-                                                    </h:commandLink>
+                                <!-- IMAGE VIEW MODE -->
+                                <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.imageView}">
+                                    <!-- Main Image Display -->
+                                    <div
+                                        class="flex-grow-1 d-flex flex-column align-items-center justify-content-around">
+                                        <div>
+                                            <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage != null}">
+                                                <canvas
+                                                    class="thumb-canvas"
+                                                    data-image_small="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
+                                                    data-image_large="#{AktuelleSchritteForm.myPlugin.currentImage.largeThumbnailUrl}"
+                                                    title="#{AktuelleSchritteForm.myPlugin.currentImage.imageName}"
+                                                    id="mainImage"></canvas>
+                                                <div class="mt-2 text-center">
+                                                    <small class="text-muted">#{AktuelleSchritteForm.myPlugin.currentImage.imageName}</small>
                                                 </div>
-                                            </div>
-                                        </ui:repeat>
+                                            </h:panelGroup>
+                                        </div>
+                                        <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage == null}">
+                                            <div class="alert alert-info mt-5">#{msgs.noImagesFound}</div>
+                                        </h:panelGroup>
                                     </div>
-                                </div>
-                            </h:panelGroup>
-                        </h:form>
+                                    <!-- Paginator -->
+                                    <div class="dataTables__paginator mx-auto">
+                                        <!-- First -->
+                                        <button
+                                            class="btn btn-blank"
+                                            aria-label="#{msgs.firstPage}"
+                                            jsf:action="#{AktuelleSchritteForm.myPlugin.firstImage}"
+                                            jsf:disabled="#{AktuelleSchritteForm.myPlugin.currentImageIndex == 0}"
+                                            jsf:id="navfirst">
+                                            <span class="fa fa-angle-double-left" />
+                                            <f:ajax render="@form" />
+                                        </button>
+
+                                        <!-- Previous -->
+                                        <button
+                                            class="btn btn-primary-400"
+                                            jsf:action="#{AktuelleSchritteForm.myPlugin.previousImage}"
+                                            jsf:disabled="#{AktuelleSchritteForm.myPlugin.currentImageIndex == 0}"
+                                            jsf:id="navprev">
+                                            <span class="fa fa-angle-left" />
+                                            <h:outputText value=" #{msgs.previousImage}" />
+                                            <f:ajax render="@form" />
+                                        </button>
+
+                                        <!-- Page info and jump -->
+                                        <div class="dataTables__paginator__page-count">
+                                            <button
+                                                type="button"
+                                                class="btn btn-link text-black"
+                                                id="txtMoveTo1"
+                                                onclick="document.querySelector('[id$=txtMoveTo2]').style.display='inline';
+                                                        document.querySelector('[id$=txtMoveTo1]').style.display='none';
+                                                        document.querySelector('[id$=txtMoveTo2]').focus();
+                                                        document.querySelector('[id$=txtMoveTo2]').select();">
+                                                #{msgs.seite} #{AktuelleSchritteForm.myPlugin.currentPageNumber} #{msgs.von}
+                                                #{AktuelleSchritteForm.myPlugin.imageCount}</button>
+
+                                            <h:inputText
+                                                id="txtMoveTo2"
+                                                forceId="false"
+                                                value="#{AktuelleSchritteForm.myPlugin.pageJumpInput}"
+                                                style="display:none;width:30px"
+                                                required="true"
+                                                onblur="document.querySelector('[id$=txtMoveTo2]').style.display='none';document.querySelector('[id$=txtMoveTo1]').style.display='inline';"
+                                                onkeypress="return submitEnter(document.querySelector('[id$=cmdMoveTo]').id,event)" />
+                                            <h:commandButton
+                                                action="#{AktuelleSchritteForm.myPlugin.jumpToPage}"
+                                                id="cmdMoveTo"
+                                                forceId="false"
+                                                value="go"
+                                                style="display:none">
+                                            </h:commandButton>
+                                        </div>
+
+                                        <!-- Next -->
+                                        <button
+                                            class="btn btn-primary-400"
+                                            jsf:action="#{AktuelleSchritteForm.myPlugin.nextImage}"
+                                            jsf:disabled="#{AktuelleSchritteForm.myPlugin.currentImageIndex >= AktuelleSchritteForm.myPlugin.imageCount - 1}"
+                                            jsf:id="navnext">
+                                            <h:outputText value="#{msgs.nextImage} " />
+                                            <span class="fa fa-angle-right" />
+                                            <f:ajax render="@form" />
+                                        </button>
+
+                                        <!-- Last -->
+                                        <button
+                                            class="btn btn-blank"
+                                            aria-label="#{msgs.lastImage}"
+                                            jsf:action="#{AktuelleSchritteForm.myPlugin.lastImage}"
+                                            jsf:disabled="#{AktuelleSchritteForm.myPlugin.currentImageIndex >= AktuelleSchritteForm.myPlugin.imageCount - 1}"
+                                            jsf:id="navlast">
+                                            <span class="fa fa-angle-double-right" />
+                                            <f:ajax render="@form" />
+                                        </button>
+                                    </div>
+                                </h:panelGroup>
+
+                                <!-- THUMBNAIL VIEW MODE -->
+                                <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.thumbnailView}">
+                                    <div id="thumbnailsContainer" class="overflow-y-auto" style="height: 80vh;">
+                                        <div class="thumbnails" style="&#45;&#45;thumb-size: #{AktuelleSchritteForm.myPlugin.thumbnailSize + 50}px;">
+                                            <ui:repeat value="#{AktuelleSchritteForm.myPlugin.imageList}" var="image" varStatus="status">
+                                                <div class="thumbnails__thumb #{AktuelleSchritteForm.myPlugin.currentImageIndex eq status.index ? 'active' : ''}">
+                                                    <div class="thumbnails__thumb-image">
+                                                        <h:commandLink
+                                                            action="#{AktuelleSchritteForm.myPlugin.selectImage(status.index)}"
+                                                            styleClass="btn">
+                                                            <canvas
+                                                                class="thumb-canvas"
+                                                                data-image_small="#{image.thumbnailUrl}"
+                                                                data-image_large="#{image.largeThumbnailUrl}"
+                                                                title="#{image.tooltip}"
+                                                                id="thumb_full_#{status.index}"
+                                                                style="width: 100%; height: auto;"></canvas>
+                                                            <div class="mt-1 text-center">
+                                                                <small class="d-block text-truncate fw-bold">
+                                                                    #{status.index + 1}
+                                                                </small>
+                                                                <small class="d-block text-truncate text-muted" style="font-size: 0.65rem;">
+                                                                    #{image.imageName}
+                                                                </small>
+                                                            </div>
+                                                        </h:commandLink>
+                                                    </div>
+                                                </div>
+                                            </ui:repeat>
+                                        </div>
+                                    </div>
+                                </h:panelGroup>
+                            </h:form>
+                        </div>
+                        <div class="col mei-editor-col">
+                            <h:form id="meiForm" styleClass="d-flex flex-column h-100 justify-content-between">
+                                <mei:editor
+                                    content="#{AktuelleSchritteForm.myPlugin.meiContent}" />
+                                    <button:row styleClass="my-3">
+                                        <!-- Save -->
+                                        <button
+                                            jsf:id="save"
+                                            class="btn btn-blank ms-auto"
+                                            jsf:action="#{AktuelleSchritteForm.myPlugin.saveContent}"
+                                            type="submit">
+                                            <span
+                                                aria-hidden="true"
+                                                class="fa fa-save" />
+                                            <span>
+                                                <h:outputText value="#{msgs.speichern}" />
+                                            </span>
+                                            <f:ajax execute=":meiEditorSection:meiForm:meiInput @this" render="@none" />
+                                        </button>
+                                        <button
+                                            class="btn btn-success"
+                                            jsf:id="finishAndClose"
+                                            type="submit"
+                                            jsf:rendered="#{AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
+                                            jsf:action="#{AktuelleSchritteForm.SchrittDurchBenutzerAbschliessen}">
+                                            <span
+                                                aria-hidden="true"
+                                                class="fa fa-check" />
+                                            <span>
+                                                <h:outputText value="#{msgs.task_leavePluginAndFinishTask}" />
+                                            </span>
+                                        </button>
+                                    </button:row>
+                            </h:form>
+                        </div>
                     </div>
-                    <div class="col">
-                        <h:form id="meiForm" styleClass="d-flex flex-column h-100 justify-content-between">
-                            <mei:editor
-                                content="#{AktuelleSchritteForm.myPlugin.meiContent}" />
-                                <button:row styleClass="my-3">
-                                    <!-- Save -->
-                                    <button
-                                        jsf:id="save"
-                                        class="btn btn-blank ms-auto"
-                                        jsf:action="#{AktuelleSchritteForm.myPlugin.saveContent}"
-                                        type="submit">
-                                        <span
-                                            aria-hidden="true"
-                                            class="fa fa-save" />
-                                        <span>
-                                            <h:outputText value="#{msgs.speichern}" />
-                                        </span>
-                                        <f:ajax execute=":meiEditorSection:meiForm:meiInput @this" render="@none" />
-                                    </button>
-                                    <button
-                                        class="btn btn-success"
-                                        jsf:id="finishAndClose"
-                                        type="submit"
-                                        jsf:rendered="#{NavigationForm.uiStatus.pluginSimulation != true and AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
-                                        jsf:action="#{AktuelleSchritteForm.SchrittDurchBenutzerAbschliessen}">
-                                        <span
-                                            aria-hidden="true"
-                                            class="fa fa-check" />
-                                        <span>
-                                            <h:outputText value="#{msgs.task_leavePluginAndFinishTask}" />
-                                        </span>
-                                    </button>
-                                </button:row>
-                        </h:form>
-                    </div>
-                </div>
-            </section:body>
-        </section:section>
+                </section:body>
+            </section:section>
+        </div>
 
         <script>
             faces.ajax.addOnEvent(function(data) {
