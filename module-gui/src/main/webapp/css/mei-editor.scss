@@ -200,9 +200,9 @@
 
             // MIDI note highlighting
             .highlighted-note {
-                filter: drop-shadow(0 0 30px var(--clr-primary, #368ee0));
-                fill: var(--clr-primary, #368ee0) !important;
-                stroke: var(--clr-primary-600, #2c6f9c) !important;
+                filter: drop-shadow(0 0 30px var(--clr-action, #368ee0));
+                fill: var(--clr-action, #368ee0) !important;
+                stroke: var(--clr-action, #2c6f9c) !important;
             }
         }
     }
