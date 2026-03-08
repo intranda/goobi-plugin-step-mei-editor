@@ -26,7 +26,7 @@ To use the plugin, the following files must be installed:
 
 Once the plugin has been installed, it can be selected within the workflow for the respective work steps and thus executed automatically. As shown in the following screenshot, this is done by selecting the plugin `intranda_step_mei_editor` from the list of installed plugins:
 
-![Example workflow structure](screen1_en.png)
+![Konfiguration](screen1_en.png)
 
 ## Overview and functionality
 
@@ -38,9 +38,11 @@ The image display on the left can show either a single image or a configurable p
 
 The changes can be applied by clicking the "Save" button. "Save results and complete task" saves the current version of the MEI-XML and completes the task.
 
+![User interface](screen2_en.png)
+
 ## Configuration
 
-The plugin is configured in the file `plugin_intranda_step_ZZZ.xml` as shown here:
+The plugin is configured in the file `plugin_intranda_step_mei_editor.xml` as shown here:
 
 ```xml
 <config_plugin>
