@@ -11,7 +11,8 @@
     xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:button="http://goobi.io/button"
     xmlns:section="http://goobi.io/section"
-    xmlns:mei="http://goobi.io/mei">
+    xmlns:mei="http://goobi.io/mei"
+    xmlns:util="http://goobi.io/util">
     <ui:param
         name="myPageTitle"
         value="#{msgs.plugin}: #{msgs[('plugin_').concat(AktuelleSchritteForm.myPlugin.title)]}" />
@@ -110,20 +111,20 @@
                                         role="group">
                                         <button
                                             jsf:action="#{AktuelleSchritteForm.myPlugin.setViewMode('image')}"
-                                            class="btn btn-#{AktuelleSchritteForm.myPlugin.imageView ? 'primary-400' : 'outline-primary-400'}">
+                                            class="btn btn-icon btn-blank #{AktuelleSchritteForm.myPlugin.imageView ? 'active' : ''}"
+                                            title="#{msgs.mets_showImagesOne}"
+                                            data-bs-toggle="tooltip">
                                             <span class="visually-hidden">#{msgs.mets_showImagesOne}</span>
-                                            <span
-                                                class="fa fa-picture-o"
-                                                aria-hidden="true" />
+                                            <util:icon icon="photo" />
                                             <f:ajax render="@form" />
                                         </button>
                                         <button
                                             jsf:action="#{AktuelleSchritteForm.myPlugin.setViewMode('thumbnail')}"
-                                            class="btn btn-#{AktuelleSchritteForm.myPlugin.thumbnailView ? 'primary-400' : 'outline-primary-400'}">
+                                            class="btn btn-icon btn-blank #{AktuelleSchritteForm.myPlugin.thumbnailView ? 'active' : ''}"
+                                            title="#{msgs.mets_showImagesThumbs}"
+                                            data-bs-toggle="tooltip">
                                             <span class="visually-hidden">#{msgs.mets_showImagesThumbs}</span>
-                                            <span
-                                                class="fa fa-th"
-                                                aria-hidden="true" />
+                                            <util:icon icon="layout-grid" />
                                             <f:ajax render="@form" />
                                         </button>
                                     </div>

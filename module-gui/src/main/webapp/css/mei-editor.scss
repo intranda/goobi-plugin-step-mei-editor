@@ -3,9 +3,13 @@
         max-width: 50%;
     }
 
-    .btn-outline-primary-400 {
-        --bs-btn-color: var(--clr-primary-400);
-        --bs-btn-border-color: var(--clr-primary-400);
+    .btn-group .btn.btn-blank.active {
+        background-color: var(--clr-neutral-300);
+        border-color: var(--clr-neutral-300);
+    }
+
+    .thumbnails__thumb-image .btn {
+        flex-direction: column;
     }
 
     .editor {
