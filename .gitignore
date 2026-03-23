@@ -18,3 +18,5 @@ MEIEditor/
 # IntelliJ IDEA
 .idea
 *.iml
+.flattened-pom.xml
+*/.flattened-pom.xml
