@@ -25,7 +25,9 @@
                 aria-expanded="true"
                 aria-controls="codeMirrorPanel">
                 <util:icon icon="file-code" />
-                <h6>MEI</h6>
+                <h6 class="me-auto">MEI</h6>
+                <util:icon icon="chevron-down" styleClass="extend-caret" />
+                <util:icon icon="chevron-up" styleClass="collapse-caret" />
             </button>
             <div id="codeMirrorPanel" class="panel-body collapse show">
                 <div class="editor">
@@ -62,8 +64,10 @@
                 data-bs-target="#verovioPanel"
                 aria-expanded="true"
                 aria-controls="verovioPanel">
-                <span class="fa fa-music" aria-hidden="true"></span>
-                <h6>Verovio</h6>
+                <util:icon icon="music" />
+                <h6 class="me-auto">Verovio</h6>
+                <util:icon icon="chevron-down" styleClass="extend-caret" />
+                <util:icon icon="chevron-up" styleClass="collapse-caret" />
             </button>
             <div id="verovioPanel" class="panel-body collapse show">
                 <mei:verovio
