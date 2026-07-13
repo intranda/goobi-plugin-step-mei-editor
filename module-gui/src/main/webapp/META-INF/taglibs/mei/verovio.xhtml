@@ -23,7 +23,7 @@
                         title="#{msgs.zoomOut}"
                         data-bs-toggle="tooltip"
                         data-command="zoomOut">
-                        <span class="fa fa-search-minus" aria-hidden="true"></span>
+                        <util:icon icon="zoom-out" />
                     </button>
                     <button
                         id="verovioZoomIn"
@@ -33,7 +33,7 @@
                         title="#{msgs.zoomIn}"
                         data-bs-toggle="tooltip"
                         data-command="zoomIn">
-                        <span class="fa fa-search-plus" aria-hidden="true"></span>
+                        <util:icon icon="zoom-in" />
                     </button>
                     <button
                         id="verovioZoomReset"
@@ -43,7 +43,7 @@
                         title="Reset Zoom"
                         data-bs-toggle="tooltip"
                         data-command="resetZoom">
-                        <span class="fa fa-expand" aria-hidden="true"></span>
+                        <util:icon icon="zoom-reset" />
                     </button>
                 </div>
                 <div class="editor-menu-group">
@@ -55,7 +55,7 @@
                         title="#{msgs.previous}"
                         data-bs-toggle="tooltip"
                         data-command="previousPage">
-                        <span class="fa fa-chevron-left" aria-hidden="true"></span>
+                        <util:icon icon="chevron-left" />
                     </button>
                     <div class="editor-info editor-page-indicator">
                         #{msgs.seite}
@@ -71,7 +71,7 @@
                         title="#{msgs.next}"
                         data-bs-toggle="tooltip"
                         data-command="nextPage">
-                        <span class="fa fa-chevron-right" aria-hidden="true"></span>
+                        <util:icon icon="chevron-right" />
                     </button>
                 </div>
                 <div class="editor-menu-group">
@@ -83,7 +83,7 @@
                         title="#{msgs.play} MIDI"
                         data-bs-toggle="tooltip"
                         data-command="playMidi">
-                        <span class="fa fa-play" aria-hidden="true"></span>
+                        <util:icon icon="play" />
                     </button>
                     <button
                         id="verovioPauseMIDI"
@@ -93,7 +93,7 @@
                         title="#{msgs.pause} MIDI"
                         data-bs-toggle="tooltip"
                         data-command="pauseMidi">
-                        <span class="fa fa-pause" aria-hidden="true"></span>
+                        <util:icon icon="pause" />
                     </button>
                     <button
                         id="verovioStopMIDI"
@@ -103,7 +103,7 @@
                         title="#{msgs.stop} MIDI"
                         data-bs-toggle="tooltip"
                         data-command="stopMidi">
-                        <span class="fa fa-stop" aria-hidden="true"></span>
+                        <util:icon icon="stop" />
                     </button>
                     <div class="editor-midi-scrubber">
                         <div class="scrubber-container">
@@ -124,7 +124,7 @@
                             data-bs-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="false">
-                            <span class="fa fa-download" aria-hidden="true"></span>
+                            <util:icon icon="download" />
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="verovioDownloadMenu">
                             <li>

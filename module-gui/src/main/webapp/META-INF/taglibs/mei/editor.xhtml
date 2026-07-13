@@ -6,6 +6,7 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
     xmlns:mei="http://goobi.io/mei"
+    xmlns:util="http://goobi.io/util"
 	>
     <!-- MEI Editor Container -->
     <div class="editor editor-mei" data-editor-id="meiEditor" data-editor="mei">
@@ -23,7 +24,7 @@
                 data-bs-target="#codeMirrorPanel"
                 aria-expanded="true"
                 aria-controls="codeMirrorPanel">
-                <span class="fa fa-code" aria-hidden="true"></span>
+                <util:icon icon="file-code" />
                 <h6>MEI</h6>
             </button>
             <div id="codeMirrorPanel" class="panel-body collapse show">
@@ -39,7 +40,7 @@
                                 data-bs-toggle="tooltip"
                                 data-command="refresh"
                                 >
-                                <span class="fa fa-refresh" aria-hidden="true"></span>
+                                <util:icon icon="refresh" />
                             </button>
                             <label class="form-check-label">
                                 <input type="checkbox" id="AutoUpdateCheckbox" class="form-check-input" checked="true"/>

@@ -53,7 +53,7 @@
         <div class="mei-plugin">
             <section:section type="action" id="meiEditorSection">
                 <section:header
-                    icon="puzzle-piece"
+                    icon="puzzle"
                     title="#{msgs.plugin}: #{msgs[('plugin_').concat(AktuelleSchritteForm.myPlugin.title)]}">
                     <h:form id="headerForm">
                         <div class="actions d-flex">
@@ -65,9 +65,7 @@
                                 title="#{msgs.reload}"
                                 rel="tooltip"
                                 data-bs-toggle="tooltip">
-                                <span
-                                    aria-hidden="true"
-                                    class="fa fa-refresh" />
+                                <util:icon icon="refresh" />
                             </button>
                             <button
                                 jsf:rendered="#{AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
@@ -78,9 +76,7 @@
                                 jsf:action="#{AktuelleSchritteForm.SchrittDurchBenutzerAbschliessen}"
                                 rel="tooltip"
                                 data-bs-toggle="tooltip">
-                                <span
-                                    aria-hidden="true"
-                                    class="fa fa-check" />
+                                <util:icon icon="check" />
                             </button>
                             <button
                                 jsf:id="id12"
@@ -91,9 +87,7 @@
                                 title="#{msgs.pluginLeave}"
                                 data-bs-toggle="tooltip"
                                 rel="tooltip">
-                                <span
-                                    aria-hidden="true"
-                                    class="fa fa-close" />
+                                <util:icon icon="x" />
                             </button>
                         </div>
                     </h:form>
@@ -180,7 +174,7 @@
                                             jsf:action="#{AktuelleSchritteForm.myPlugin.firstImage}"
                                             jsf:disabled="#{AktuelleSchritteForm.myPlugin.currentImageIndex == 0}"
                                             jsf:id="navfirst">
-                                            <span class="fa fa-angle-double-left" />
+                                            <util:icon icon="chevrons-left" />
                                             <f:ajax render="@form" />
                                         </button>
 
@@ -190,7 +184,7 @@
                                             jsf:action="#{AktuelleSchritteForm.myPlugin.previousImage}"
                                             jsf:disabled="#{AktuelleSchritteForm.myPlugin.currentImageIndex == 0}"
                                             jsf:id="navprev">
-                                            <span class="fa fa-angle-left" />
+                                            <util:icon icon="chevron-left" />
                                             <h:outputText value=" #{msgs.previousImage}" />
                                             <f:ajax render="@form" />
                                         </button>
@@ -232,7 +226,7 @@
                                             jsf:disabled="#{AktuelleSchritteForm.myPlugin.currentImageIndex >= AktuelleSchritteForm.myPlugin.imageCount - 1}"
                                             jsf:id="navnext">
                                             <h:outputText value="#{msgs.nextImage} " />
-                                            <span class="fa fa-angle-right" />
+                                            <util:icon icon="chevron-right" />
                                             <f:ajax render="@form" />
                                         </button>
 
@@ -243,7 +237,7 @@
                                             jsf:action="#{AktuelleSchritteForm.myPlugin.lastImage}"
                                             jsf:disabled="#{AktuelleSchritteForm.myPlugin.currentImageIndex >= AktuelleSchritteForm.myPlugin.imageCount - 1}"
                                             jsf:id="navlast">
-                                            <span class="fa fa-angle-double-right" />
+                                            <util:icon icon="chevrons-right" />
                                             <f:ajax render="@form" />
                                         </button>
                                     </div>
@@ -294,9 +288,7 @@
                                             class="btn btn-blank ms-auto"
                                             jsf:action="#{AktuelleSchritteForm.myPlugin.saveContent}"
                                             type="submit">
-                                            <span
-                                                aria-hidden="true"
-                                                class="fa fa-save" />
+                                            <util:icon icon="device-floppy" />
                                             <span>
                                                 <h:outputText value="#{msgs.speichern}" />
                                             </span>
@@ -308,9 +300,7 @@
                                             type="submit"
                                             jsf:rendered="#{AktuelleSchritteForm.myPlugin.allowTaskFinishButtons == true}"
                                             jsf:action="#{AktuelleSchritteForm.SchrittDurchBenutzerAbschliessen}">
-                                            <span
-                                                aria-hidden="true"
-                                                class="fa fa-check" />
+                                            <util:icon icon="check" />
                                             <span>
                                                 <h:outputText value="#{msgs.task_leavePluginAndFinishTask}" />
                                             </span>
