@@ -162,7 +162,7 @@
                                             </h:panelGroup>
                                         </div>
                                         <h:panelGroup rendered="#{AktuelleSchritteForm.myPlugin.currentImage == null}">
-                                            <div class="alert alert-info mt-5">#{msgs.noImagesFound}</div>
+                                            <util:alert type="info" message="#{msgs.noImagesFound}" styleClass="mt-5" />
                                         </h:panelGroup>
                                     </div>
                                     <!-- Paginator -->
